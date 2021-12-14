@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('../utils');
+const { login } = require('../auth')
 
 const router = express.Router();
 /* GET users listing. */
@@ -93,6 +94,7 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
     console.log("HELLOO")
     await user.save();
     //TODO add loginUser
+    login(req, res, user);
     res.redirect('/');
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
@@ -139,6 +141,7 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
 
       if (passwordMatch) {
         // TODO login function for session
+        login(req, res, user);
         return res.redirect('/');
       }
     }
@@ -147,6 +150,18 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
   } else {
     errors = validatorErrors.array().map(error => error.msg);
   }
+
+  res.render('user-login', {
+    title: 'Log in',
+    csrfToken: req.csrfToken(),
+    email,
+    errors
+   })
 }))
+
+router.post('/logout', (req, res) => {
+  // TODO logout user
+  res.redirect('/');
+})
 
 module.exports = router;
