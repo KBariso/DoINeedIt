@@ -4,13 +4,14 @@ html
       block head
         title Do I Need It | #{title}
         link(rel='stylesheet' href='/stylesheets/reset.css')
+        link(rel="stylesheet", href='/stylesheets/forms.css')
   body
     nav(class='nav-bar')
       div(class='nav-left')
         a(href='/' id='home' class='nav-button') Do I Need It?
       div(class='nav-right')
         if authenticated
-          p Welcome!
+          p(class='welcome') Welcome, #{user.fullName}!
           form(method='post' action='/users/logout')
             button(type='submit' class='nav-button') Logout
         else

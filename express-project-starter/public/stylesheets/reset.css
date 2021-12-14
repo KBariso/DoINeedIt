@@ -54,10 +54,14 @@ h1 {
 
 .nav-button {
   text-decoration: none;
-  border: 1px solid rgb(241, 241, 241);
+  /* border: 1px solid rgb(241, 241, 241); */
+  color: rgb(241, 241, 241);
+  border: none;
   padding: 5px 5px;
   border-radius: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 12px;
+  background-color: transparent;
 }
 
 .nav-button:hover {
@@ -68,8 +72,14 @@ h1 {
   opacity: 0.50;
 }
 
-button {
+.welcome {
+  font-size: 14px;
+  margin: 0;
+  padding: 5px;
+}
+
+/* button {
   border: none;
   background: none;
   color: rgb(241, 241, 241);
-}
+} */
