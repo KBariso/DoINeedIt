@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('../utils');
+const { login } = require('../auth')
 
 const router = express.Router();
 /* GET users listing. */
@@ -93,6 +94,7 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
     console.log("HELLOO")
     await user.save();
     //TODO add loginUser
+    login(req, res, user);
     res.redirect('/');
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
@@ -109,5 +111,57 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
     });
   }
 }));
+
+router.get('/login', csrfProtection, (req, res) => {
+  res.render('user-login', { title: 'Log In', csrfToken: req.csrfToken() });
+});
+
+const loginValidators = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Email Address')
+    .isEmail()
+    .withMessage('Email Address is not a valid email'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Password')
+]
+
+router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const validatorErrors = validationResult(req);
+  const errors = [];
+
+
+  if (validatorErrors.isEmpty()) {
+    const user = await db.User.findOne({ where: { email } });
+
+    if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
+
+      if (passwordMatch) {
+        // TODO login function for session
+        login(req, res, user);
+        return res.redirect('/');
+      }
+    }
+
+    errors.push(`Login failed for provided email and password.`)
+  } else {
+    errors = validatorErrors.array().map(error => error.msg);
+  }
+
+  res.render('user-login', {
+    title: 'Log in',
+    csrfToken: req.csrfToken(),
+    email,
+    errors
+   })
+}))
+
+router.post('/logout', (req, res) => {
+  // TODO logout user
+  res.redirect('/');
+})
 
 module.exports = router;
