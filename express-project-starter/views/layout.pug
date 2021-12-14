@@ -2,9 +2,17 @@ doctype html
 html
   head
       block head
-        title="Express Starter App"
+        title Do I Need It | #{title}
         link(rel='stylesheet' href='/stylesheets/reset.css')
   body
     nav(class='nav-bar')
+      a(href='/') Home
+      if authenticated
+        p Welcome!
+        form(method='post' action='/users/logout')
+          button(type='submit') Logout
+      else
+        a(href='/users/signup') Sign Up
+        a(href='/users/login') Log In
 
     block content
