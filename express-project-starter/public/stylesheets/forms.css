@@ -2,6 +2,7 @@
   margin: 10px auto;
   width: 50%;
   padding-left: 10px;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .auth-form {
@@ -12,7 +13,7 @@
   font-size: 15px;
   border: 1px solid gray;;
   border-radius: 6px;
-  background-color: #b5d6f7;
+  background-color: rgb(235, 232, 232);
 }
 
 .auth-form > label {
@@ -27,10 +28,23 @@
   border: 1px solid gray;
 }
 
+.auth-form > input[type=text]:focus {
+  background-color: #e4eef8;
+}
+
 .auth-form > button {
   margin-top: 10px;
   padding: 5px 0;
   border-radius: 3px;
   border: 1px solid gray;
-  background-color: #c5dcf5;
+  background-color: lightgray;
+}
+
+.auth-form > button:hover {
+  background-color: rgb(189, 189, 189);
+  cursor: pointer;
+}
+
+.auth-form > button:active {
+  opacity: 0.75;
 }
