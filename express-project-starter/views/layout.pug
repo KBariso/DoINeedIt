@@ -6,13 +6,15 @@ html
         link(rel='stylesheet' href='/stylesheets/reset.css')
   body
     nav(class='nav-bar')
-      a(href='/') Home
-      if authenticated
-        p Welcome!
-        form(method='post' action='/users/logout')
-          button(type='submit') Logout
-      else
-        a(href='/users/signup') Sign Up
-        a(href='/users/login') Log In
+      div(class='nav-left')
+        a(href='/' id='home' class='nav-button') Do I Need It?
+      div(class='nav-right')
+        if authenticated
+          p Welcome!
+          form(method='post' action='/users/logout')
+            button(type='submit' class='nav-button') Logout
+        else
+          a(href='/users/signup' class='nav-button') Sign Up
+          a(href='/users/login' class='nav-button') Log In
 
     block content

@@ -1,6 +1,7 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
+  font: 14px Verdana, Geneva, Tahoma, sans-serif;
 }
 
 a {
@@ -24,4 +25,51 @@ body, header, nav {
 
 h1 {
   font-size: 2rem;
+}
+
+.nav-bar {
+  background-color: #0077B8;
+  color: rgb(241, 241, 241);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px;
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+}
+
+.nav-right > * {
+  margin: 0 5px;
+}
+
+#home {
+  border: none;
+  font-size: 15px;
+}
+
+.nav-button {
+  text-decoration: none;
+  border: 1px solid rgb(241, 241, 241);
+  padding: 5px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.nav-button:hover {
+  background-color: #006094;
+}
+
+.nav-button:active {
+  opacity: 0.50;
+}
+
+button {
+  border: none;
+  background: none;
+  color: rgb(241, 241, 241);
 }
