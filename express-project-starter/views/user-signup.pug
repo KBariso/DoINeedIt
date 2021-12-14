@@ -2,10 +2,7 @@ extends layout.pug
 
 block content
     h1(class='form-title') Sign Up
-    if errors
-        ul
-            each error in errors
-                li= error
+
 
     form(action="/users/signup", method="post" class="auth-form")
         input(type='hidden' name='_csrf' value=csrfToken)
@@ -22,3 +19,7 @@ block content
         label(for="confirmPassword") Confirm Password
         input(type="password", name="confirmPassword" required)
         button(type="submit") Sign Up
+    if errors
+        ul(class='error-list')
+            each error in errors
+                li= error

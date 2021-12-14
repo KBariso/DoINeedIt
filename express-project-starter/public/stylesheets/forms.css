@@ -48,3 +48,26 @@
 .auth-form > button:active {
   opacity: 0.75;
 }
+
+.error-list {
+  margin: 5px auto;
+  width: 50%;
+  list-style: none;
+  padding: 10px;
+  background-color: #f8d7da;
+
+}
+
+.error-list::before {
+  content: '!!';
+  font-weight: bolder;
+  color: #b12c37;
+}
+
+.error-list > li {
+  padding: 5px;
+  font-size: 14px;
+  /* color:rgba(0, 0, 0, 0.7); */
+  color: #cc5e67;
+  font-weight: bold;
+}
