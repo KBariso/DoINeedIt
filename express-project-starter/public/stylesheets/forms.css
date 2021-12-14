@@ -1,1 +1,31 @@
+.form-title {
+  margin: 10px auto;
+  width: 50%;
+  padding-left: 10px;
+}
 
+.auth-form {
+  display: grid;
+  margin: 10px auto;
+  padding: 10px;
+  width: 50%;
+  font-size: 15px;
+  border: 1px solid gray;;
+  border-radius: 6px;
+  background-color: lightgray;
+}
+
+.auth-form > label {
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.auth-form > input {
+  font-size: 14px;
+  padding: 3px;
+}
+
+.auth-form > button {
+  margin-top: 10px;
+  padding: 5px 0;
+}
