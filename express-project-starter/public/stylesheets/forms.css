@@ -12,7 +12,7 @@
   font-size: 15px;
   border: 1px solid gray;;
   border-radius: 6px;
-  background-color: lightgray;
+  background-color: #b5d6f7;
 }
 
 .auth-form > label {
@@ -23,9 +23,14 @@
 .auth-form > input {
   font-size: 14px;
   padding: 3px;
+  border-radius: 3px;
+  border: 1px solid gray;
 }
 
 .auth-form > button {
   margin-top: 10px;
   padding: 5px 0;
+  border-radius: 3px;
+  border: 1px solid gray;
+  background-color: #c5dcf5;
 }
