@@ -13,7 +13,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 
     res.render('wishlist', {
         title: wishlist.name,
-
+        
     })
 }));
 
