@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.use(requireAuth);
 
+
+
 /* GET Wishlists page by Id. */
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {

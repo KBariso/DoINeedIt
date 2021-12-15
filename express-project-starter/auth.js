@@ -42,9 +42,16 @@ const restoreUser = async (req, res, next) => {
   }
 }
 
+const isAuthorized = (req, res, next, ele) => {
+  const user = req.session.auth.userId;
+  if (user === ele.id) return true;
+  else return false;
+}
+
 module.exports = {
   login,
   logout,
   requireAuth,
-  restoreUser
+  restoreUser,
+  isAuthorized
 };
