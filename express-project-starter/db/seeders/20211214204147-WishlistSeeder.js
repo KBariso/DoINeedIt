@@ -6,7 +6,7 @@ module.exports = {
       "Wishlists",
       [
         {
-          name: "Electronics",
+          name: "Cool Electronics",
           isPublic: true,
           userId: 1,
           description: "A wishlist for all the electronics I need!",
@@ -14,7 +14,7 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          name: "Home Goods",
+          name: "Living Room Furniture I Need",
           isPublic: false,
           userId: 2,
           description: "A wishlist for the furniture I need in my house!",
