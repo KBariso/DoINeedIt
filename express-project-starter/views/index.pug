@@ -7,5 +7,11 @@ append head
   script(src="/javascripts/index.js" type="module" defer)
 
 block content
-  h1= title
-  p Welcome to your Project Skeleton
+  h1(class="heading")= "Do I Need It?"
+  h2(class="sub-heading")= "YES! The wishlist app for shopaholics."
+
+  div(class="sign-up")
+    a(href="/users/signup") Sign Up for FREE
+  div
+    i(class="fa-solid fa-couch")
+    i(class="fa-solid fa-chair")
