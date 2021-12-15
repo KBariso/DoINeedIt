@@ -12,17 +12,26 @@ router.use(requireAuth);
 /* GET Wishlists page by Id. */
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    const wishlist = await db.Wishlist.findByPk(req.params.id, {
+        include: {
+            model: db.Item
+        }
+    });
+
     const wishlistsByUser = await db.Wishlist.findAll({
         where: {
             userId: req.session.auth.userId
-        }
+        },
+
     })
-    console.log("WISHLISTTTT", wishlistsByUser)
+    // const items = await db.Items.findAll({
+    // })
+    console.log("WISHLISTTTT", wishlist)
     res.render('wishlist', {
         title: wishlist.name,
-        wishlistsByUser
-
+        wishlistsByUser,
+        wishlist,
+        items: wishlist.Items
     })
 }));
 
@@ -79,7 +88,7 @@ router.post('/new', csrfProtection, wishlistValidators, asyncHandler(async (req,
 }))
 
 /* PUT Wishlists page by Id */
-
+router
 
 /* POST Comments on Wishlists by Id. */
 
