@@ -32,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     Item.belongsTo(models.Wishlist, { foreignKey: 'wishListId' });
 
     // Item.hasMany(models.Favorite, { foreignKey: 'itemId' })
+    Item.belongsToMany(models.User, {
+      through: 'Favorite',
+      otherKey: 'userId',
+      foreignKey: 'itemId'
+    });
   };
   return Item;
 };
