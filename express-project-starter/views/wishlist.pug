@@ -3,6 +3,5 @@ extends layout.pug
 block content
   div
     ul
-      each wishlist in wishlists
-      li= wishlist.name
-    
+      each wishlist in wishlistsByUser
+        li= wishlist.name
