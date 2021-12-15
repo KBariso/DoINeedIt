@@ -2,7 +2,7 @@ const express = require('express');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('../utils');
-const { requireAuth } = require('../auth');
+const { requireAuth, isAuthorized } = require('../auth');
 const { check, validationResult } = require('express-validator');
 
 const router = express.Router();
@@ -10,13 +10,13 @@ const router = express.Router();
 router.use(requireAuth);
 
 
-
 /* GET Wishlists page by Id. */
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+
     const wishlist = await db.Wishlist.findByPk(req.params.id, {
         include: {
-            model: db.Item
+            all: true
         }
     });
 
@@ -26,15 +26,17 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
         },
 
     })
-    // const items = await db.Items.findAll({
-    // })
-    console.log("WISHLISTTTT", wishlist)
+
+    const authorized = isAuthorized(req.session.auth.userId, wishlist.userId)
+
     res.render('wishlist', {
         title: wishlist.name,
         wishlistsByUser,
         wishlist,
-        items: wishlist.Items
+        items: wishlist.Items,
+        authorized
     })
+
 }));
 
 /* GET page to create a new Wishlist. */
@@ -90,7 +92,7 @@ router.post('/new', csrfProtection, wishlistValidators, asyncHandler(async (req,
 }))
 
 /* PUT Wishlists page by Id */
-router
+
 
 /* POST Comments on Wishlists by Id. */
 

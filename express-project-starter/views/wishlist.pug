@@ -7,12 +7,16 @@ block content
         li= wishlist.name
   div
     h1 #{wishlist.name}
-    a(href="/items/new") Add an item
+    h3 By #{wishlist.User.username}
+    if (authorized)
+      a(href="/items/new") Add an item
+      a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
     div
       if (items)
         each item in items
           div
-            input(type="checkbox", name="purchased" value="purchased")
+            if (authorized)
+              input(type="checkbox", name="purchased" value="purchased")
             span
               a(href=`/items/${item.id}`) #{item.name}
             span #{item.price}
