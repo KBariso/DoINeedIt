@@ -1,3 +1,22 @@
 extends layout.pug
 
 block content
+  div
+    ul
+      each wishlist in wishlistsByUser
+        li= wishlist.name
+  div
+    h1 #{wishlist.name}
+    h3 By #{wishlist.User.username}
+    if (authorized)
+      a(href="/items/new") Add an item
+      a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
+    div
+      if (items)
+        each item in items
+          div
+            if (authorized)
+              input(type="checkbox", name="purchased" value="purchased")
+            span
+              a(href=`/items/${item.id}`) #{item.name}
+            span #{item.price}

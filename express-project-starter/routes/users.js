@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('../utils');
-const { login, logout } = require('../auth')
+const { login, logout, restoreUser } = require('../auth')
 
 const router = express.Router();
 /* GET users listing. */
@@ -91,14 +91,18 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
   if(validatorErrors.isEmpty()) {
     const hashedPassword = await bcrypt.hash(password, 10);
     user.hashedPassword = hashedPassword;
-    console.log("HELLOO")
     await user.save();
-    //TODO add loginUser
+
+    const newWishlist = await db.Wishlist.create({
+      name: "New Wishlist",
+      userId: user.id
+    })
+
     login(req, res, user);
+    res.locals.authenticated = true;
     res.redirect('/');
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
-    console.log("GOODBYE")
     res.render('user-signup', {
       title: 'Sign Up',
       user,
@@ -140,7 +144,6 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
 
       if (passwordMatch) {
-        // TODO login function for session
         login(req, res, user);
         return res.redirect('/');
       }

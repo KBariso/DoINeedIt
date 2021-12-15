@@ -10,10 +10,16 @@ router.get('/', asyncHandler (async function(req, res, next) {
   if(res.locals.authenticated) {
     // const wishlist = await db.
     const userId = req.session.auth.userId
-    res.redirect(`/wishlists/${userId}`);
+    const recentWishlist = await db.Wishlist.findOne({
+      where: {userId},
+      order: [['updatedAt', 'DESC']]
+    })
+    res.redirect(`/wishlists/${recentWishlist.id}`);
+  } else {
+    res.render('index', { title: 'Do I Need It', authenticated: res.locals.authenticated });
   }
-  res.render('index', { title: 'Do I Need It', authenticated: res.locals.authenticated });
 }));
+
 
 
 module.exports = router;

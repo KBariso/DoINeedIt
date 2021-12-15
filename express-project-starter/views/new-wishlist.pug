@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+  form(action="/wishlists/new", method="post")
+    input(type="hidden" name="_csrf" value=csrfToken)
+    label(for="name") Name
+    input(type="text", name="name" value=name)
+    label(for="isPublic") Privacy setting
+    if isPublic == "true"
+      input(type="radio", name="isPublic" value="true" id="true" checked)
+      label(for="true") Public
+      input(type="radio", name="isPublic" value="false" id="false")
+      label(for="false") Private
+    else
+      input(type="radio", name="isPublic" value="true" id="true")
+      label(for="true") Public
+      input(type="radio", name="isPublic" value="false" id="false" checked)
+      label(for="false") Private
+    label(for="description") Description
+    textarea(name="description", cols="20", rows="7") #{description}
+    button(type="submit") Create Wishlist
+  if errors
+    ul(class='error-list')
+      each error in errors
+        li= error
