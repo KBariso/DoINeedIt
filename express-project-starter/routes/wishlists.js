@@ -9,9 +9,6 @@ const router = express.Router();
 
 router.use(requireAuth);
 
-/* GET Wishlists. */
-
-
 /* GET Wishlists page by Id. */
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
@@ -29,7 +26,19 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     })
 }));
 
-const wishlistValiditors = [
+/* GET page to create a new Wishlist. */
+
+router.get('/new', csrfProtection, (req, res) => {
+    const wishlist = db.Wishlist.build()
+    res.render('new-wishlist', {
+        title: "Create Wishlist",
+        wishlist,
+        csrfToken: req.csrfToken()
+    })
+})
+
+
+const wishlistValidators = [
     check('name')
         .exists({ checkFalsy: true })
         .withMessage('Please provide a name for the Wishlist')
@@ -44,15 +53,29 @@ const wishlistValiditors = [
 
 
 /* POST a new Wishlist. */
-router.post('/', asyncHandler(async (req, res) => {
-    const {name, isPublic, description} = req.body;
-    const newWishlist = await db.Wishlist.create({
-        name,
-        isPublic,
-        userId: req.session.auth.userId,
-        description
-    })
-    res.redirect(`/wishlists/${newWishlist.id}`)
+router.post('/new', csrfProtection, wishlistValidators, asyncHandler(async (req, res) => {
+    let {name, isPublic, description} = req.body;
+    const validatorErrors = validationResult(req)
+
+    if (validatorErrors.isEmpty()) {
+        let newWishlist = await db.Wishlist.create({
+            name,
+            isPublic,
+            userId: req.session.auth.userId,
+            description
+        })
+        res.redirect(`/wishlists/${newWishlist.id}`)
+    } else {
+        const errors = validatorErrors.array().map(error => error.msg)
+        res.render('new-wishlist', {
+            title: "Create Wishlist",
+            name,
+            isPublic,
+            description,
+            errors,
+            csrfToken: req.csrfToken()
+        })
+    }
 }))
 
 /* PUT Wishlists page by Id */
