@@ -90,7 +90,6 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
 
   if(validatorErrors.isEmpty()) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
     user.hashedPassword = hashedPassword;
     await user.save();
 
@@ -143,7 +142,6 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
 
     if (user) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-      console.log(password, user.hashedPassword.toString());
       if (passwordMatch) {
         login(req, res, user);
         return res.redirect('/');
