@@ -26,10 +26,12 @@ router.get('/', asyncHandler(async (req, res) => {
   })
 }))
 
+/* GET add item page */
+
 router.get('/new', csrfProtection, asyncHandler(async(req, res) => {
   const item = await db.Item.build();
   const categories = await db.Category.findAll();
-  res.render('new-item', {
+  res.render('item-new', {
     title: 'Add item',
     item,
     categories,
@@ -53,9 +55,10 @@ const itemValidators = [
     .withMessage('Please select a Category')
 ]
 
+/* POST add item page */
 
 router.post('/new', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
-  const {name, price, link, purchased, categoryId} = req.body;
+  const {name, price, link, purchased, categoryId, wishlistId} = req.body;
 
   const categories = await db.Category.findAll();
 
@@ -75,7 +78,7 @@ router.post('/new', csrfProtection, itemValidators, asyncHandler(async(req, res)
     res.redirect('/items')
   } else {
     const errors = validatorErrors.array().map(error => error.msg);
-    res.render('new-item', {
+    res.render('item-new', {
       title: 'Add item',
       item,
       categories,
@@ -84,6 +87,21 @@ router.post('/new', csrfProtection, itemValidators, asyncHandler(async(req, res)
     })
   }
 }))
+
+/* GET Edit item page */
+
+router.get('/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
+  const itemId = parseInt(req.params.id, 10)
+  const item = await db.Item.findByPk(itemId);
+  res.render('item-edit', {
+    title: 'Edit item',
+    item,
+    csrfToken: req.csrfToken()
+  })
+}))
+
+
+
 
 
 module.exports = router;
