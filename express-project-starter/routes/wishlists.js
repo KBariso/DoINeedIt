@@ -27,6 +27,13 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 
     })
 
+    const comments = await db.Comment.findAll({
+        where: {
+            wishListId: wishlist.id
+        },
+        include: { model: db.User }
+    })
+
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId)
 
     res.render('wishlist', {
@@ -34,6 +41,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
         wishlistsByUser,
         wishlist,
         items: wishlist.Items,
+        comments,
         authorized
     })
 

@@ -21,4 +21,12 @@ block content
               span
                 a(href=`/items/${item.id}`) #{item.name}
               span #{item.price}
+      div
+        if comments
+            ul
+                each comment in comments
+                    li
+                        p #{comment.User.username}
+                        p #{comment.content}
+                        p #{comment.createdAt}
 //- block wishlistContent
