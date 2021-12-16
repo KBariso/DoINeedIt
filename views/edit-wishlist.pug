@@ -25,6 +25,7 @@ block content
             input(type="radio", name="isPublic" value="false" id="false" checked)
             label(for="false") Private
         button(type="submit") Save Changes
+        a(href=`/wishlists/${wishlist.id}/delete`) Delete Wishlist
         div
           if (items)
             each item in items

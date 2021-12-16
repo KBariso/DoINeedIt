@@ -35,6 +35,24 @@ router.get(
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
+    const items = await db.Item.findAll({
+        where: { wishListId: wishlist.id }
+    })
+
+    const prices = items.map(item => {
+        return item.price
+    })
+
+    let totalPrice = 0
+
+    if (prices.length > 0) {
+        totalPrice = prices.reduce((accum, ele) => {
+            let price1 = parseFloat(accum, 10);
+            let price2 = parseFloat(ele, 10);
+            return price1 += price2;
+        })
+    }
+
     res.render("wishlist", {
       title: wishlist.name,
       wishlistsByUser,
@@ -42,6 +60,7 @@ router.get(
       items: wishlist.Items,
       comments,
       authorized,
+      totalPrice
     });
   })
 );
@@ -130,10 +149,6 @@ router.get(
   })
 );
 
-// router.post("/:id", csrfProtection, (req, res) => {
-//   console.log("hello");
-//   res.send("hello");
-// });
 
 router.post(
   "/:id/edit",
@@ -147,6 +162,14 @@ router.post(
     res.redirect(`/`)
   })
 );
+
+router.get("/:id/delete", asyncHandler(async(req, res) => {
+    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    await wishlist.destroy();
+    res.redirect('/')
+}))
+
+
 
 /* POST Comments on Wishlists by Id. */
 
