@@ -122,10 +122,6 @@ router.get(
   })
 );
 
-// router.post("/:id", csrfProtection, (req, res) => {
-//   console.log("hello");
-//   res.send("hello");
-// });
 
 router.post(
   "/:id/edit",
@@ -139,6 +135,14 @@ router.post(
     res.redirect(`/`)
   })
 );
+
+router.get("/:id/delete", asyncHandler(async(req, res) => {
+    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    await wishlist.destroy();
+    res.redirect('/')
+}))
+
+
 
 /* POST Comments on Wishlists by Id. */
 
