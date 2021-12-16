@@ -1,0 +1,21 @@
+extends layout.pug
+
+block content
+  link(rel="stylesheet", href='/stylesheets/wishlist.css')
+  div.content-container
+    div.left-nav-bar
+      ul
+        each wishlist in wishlistsByUser
+          li= wishlist.name
+    div.middle-section
+      form(method="/wishlists/2" action="post")
+        button(type="submit") Save Changes
+        div
+          if (items)
+            each item in items
+              div
+                if (authorized)
+                  input(type="checkbox", name="purchased" value="purchased")
+                span
+                  a(href=`/items/${item.id}`) #{item.name}
+                span #{item.price}
