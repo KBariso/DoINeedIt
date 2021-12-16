@@ -112,10 +112,13 @@ router.post('/wishlists/:id(\\d+)/items/new', csrfProtection, itemValidators, as
 router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
   const item = await db.Item.findByPk(itemId);
+  const categories = await db.Category.findAll();
+
   res.render('item-edit', {
     title: 'Edit item',
     item,
     wishListId: req.params.id,
+    categories,
     csrfToken: req.csrfToken()
   })
 }))
@@ -123,29 +126,32 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, item
 
 /* POST Edit item page */
 
-router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
+router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
   const itemToUpdate = await db.Item.findByPk(itemId);
+  const wishListId = req.params.id
   const categories = await db.Category.findAll();
-  const {name, price, link, purchased, categoryId, wishlistId} = req.body;
+  const {name, price, link, purchased, categoryId} = req.body;
 
   const item = {
     name,
     price,
+    categoryId,
     link,
     purchased}
 
   const validatorErrors = validationResult(req);
 
   if (validatorErrors.isEmpty()) {
-    await item.update(item);
-    res.redirect(`/items/${itemId}`)
+    await itemToUpdate.update(item);
+    res.redirect(`/wishlists/${wishListId}/items/${itemId}`)
   } else {
     const errors = validatorErrors.array().map(error => error.msg);
     res.render('item-new', {
       title: 'Add item',
       item: {...item, id: itemId},
       categories,
+      wishListId,
       errors,
       csrfToken: req.csrfToken()
     })
@@ -153,10 +159,11 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, asy
 
 /* DELETE an item */
 router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/delete', csrfProtection, asyncHandler(async(req, res) => {
+  const wishListId = req.params.id;
   const itemId = req.params.itemId
   const item = await db.Item.findByPk(itemId);
   await item.destroy();
-  res.redirect('/wishlists')
+  res.redirect(`/wishlists/${wishListId}`)
 }))
 
 }))
