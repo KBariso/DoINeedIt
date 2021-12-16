@@ -1,0 +1,23 @@
+extends layout.pug
+
+block content
+    form(action="/items/new", method="post")
+      input(type="hidden" name="_csrf" value=csrfToken)
+      label(for="name") Name
+      input(type="text", name="name" value=name)
+      label(for="categoryId") Category
+      select(name="categoryId" required=true)
+        option(selected="true" disabled="disabled") --Select a category--
+        each category in categories
+          option(value=category.id)= category.name
+      label(for="price") Price
+      input(type="number", name="price" value=price)
+      label(for="link") Link
+      input(type="url", name="link" value=link)
+      label(for="purchased") Purchased
+      input(type="checkbox", name="purchased" value="purchased")
+      button(type="submit") Add Item
+    if errors
+      ul(class='error-list')
+        each error in errors
+          li= error

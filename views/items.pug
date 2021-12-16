@@ -1,0 +1,7 @@
+extends layout.pug
+
+block content
+    div.middle-section
+        ul
+          each item in itemsByUser
+            li= item.name
