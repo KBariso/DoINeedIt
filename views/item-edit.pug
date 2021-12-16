@@ -6,7 +6,7 @@ block content
       label(for="name") Name
       input(type="text", name="name" value=item.name)
       label(for="categoryId") Category
-      select(name="categoryId" value=item.categoryId required=true)
+      select(name="categoryId" selected=item.categoryId required=true)
         option(selected="true" disabled="disabled") --Select a category--
         each category in categories
           option(value=category.id)= category.name

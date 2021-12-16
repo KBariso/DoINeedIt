@@ -77,7 +77,7 @@ const itemValidators = [
 
 router.post('/wishlists/:id(\\d+)/items/new', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
   const wishListId = req.params.id
-  const {name, price, link, purchased, categoryId} = req.body;
+  const {name, price, link, categoryId} = req.body;
 
   const categories = await db.Category.findAll();
 
@@ -85,7 +85,6 @@ router.post('/wishlists/:id(\\d+)/items/new', csrfProtection, itemValidators, as
     name,
     price,
     link,
-    purchased,
     categoryId,
     wishListId
   })
@@ -94,13 +93,14 @@ router.post('/wishlists/:id(\\d+)/items/new', csrfProtection, itemValidators, as
 
   if (validatorErrors.isEmpty()) {
     await item.save();
-    res.redirect(`/wishlists/${wishListId}/items`)
+    res.redirect(`/wishlists/${wishListId}`)
   } else {
     const errors = validatorErrors.array().map(error => error.msg);
     res.render('item-new', {
       title: 'Add item',
       item,
       categories,
+      wishListId,
       errors,
       csrfToken: req.csrfToken()
     })
@@ -151,6 +151,7 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, ite
       title: 'Add item',
       item: {...item, id: itemId},
       categories,
+      categoryId,
       wishListId,
       errors,
       csrfToken: req.csrfToken()
