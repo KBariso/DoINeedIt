@@ -28,12 +28,31 @@ router.get(
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
+    const items = await db.Item.findAll({
+        where: { wishListId: wishlist.id }
+    })
+
+    const prices = items.map(item => {
+        return item.price
+    })
+
+    let totalPrice = 0
+
+    if (prices.length > 0) {
+        totalPrice = prices.reduce((accum, ele) => {
+            let price1 = parseFloat(accum, 10);
+            let price2 = parseFloat(ele, 10);
+            return price1 += price2;
+        })
+    }
+
     res.render("wishlist", {
       title: wishlist.name,
       wishlistsByUser,
       wishlist,
       items: wishlist.Items,
       authorized,
+      totalPrice
     });
   })
 );
