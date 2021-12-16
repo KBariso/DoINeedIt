@@ -1,6 +1,7 @@
 extends layout.pug
 
 block content
+  link(rel="stylesheet", href='/stylesheets/wishlist.css')
   div.content-container
     div.left-nav-bar
       ul
@@ -9,6 +10,8 @@ block content
     div.middle-section
       h1 #{wishlist.name}
       h3 By #{wishlist.User.username}
+      if (wishlist.description)
+        p #{wishlist.description}
       if (authorized)
         a(href="/items/new") Add an item
         a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
