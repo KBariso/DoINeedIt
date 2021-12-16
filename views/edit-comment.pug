@@ -1,0 +1,6 @@
+extends layout.pug
+
+block content
+    form(action=`/comments/edit/${comments.id}`, method="post")
+         input(type="hidden" name="_csrf" value=csrfToken)
+        

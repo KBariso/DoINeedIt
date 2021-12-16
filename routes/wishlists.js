@@ -26,6 +26,13 @@ router.get(
       },
     });
 
+    const comments = await db.Comment.findAll({
+      where: {
+          wishListId: wishlist.id
+      },
+      include: { model: db.User }
+  })
+
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
     const items = await db.Item.findAll({
@@ -51,6 +58,7 @@ router.get(
       wishlistsByUser,
       wishlist,
       items: wishlist.Items,
+      comments,
       authorized,
       totalPrice
     });
