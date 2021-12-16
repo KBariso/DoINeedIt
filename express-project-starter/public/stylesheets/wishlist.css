@@ -1,0 +1,23 @@
+html {
+    height: 100%;
+}
+
+body {
+    background-color: chartreuse;
+    height: 100%;
+}
+.content-container {
+    display: flex;
+    justify-content: stretch;
+    height: 100%;
+}
+.left-nav-bar {
+    background-color: blueviolet;
+    width: 200px;
+}
+
+.middle-section {
+    background-color: cadetblue;
+    min-width: 400px;
+    width: 50%;
+}
