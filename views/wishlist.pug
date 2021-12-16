@@ -4,9 +4,13 @@ block content
   link(rel="stylesheet", href='/stylesheets/wishlist.css')
   div.content-container
     div.left-nav-bar
+      span My Wishlists
+      span
+        a(href="/wishlists/new") +
       ul
         each wishlist in wishlistsByUser
-          li= wishlist.name
+          li
+            a(href=`/wishlists/${wishlist.id}`) #{wishlist.name}
     div.middle-section
       h1 #{wishlist.name}
       h3 By #{wishlist.User.username}
