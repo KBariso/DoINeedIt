@@ -1,0 +1,37 @@
+extends layout.pug
+
+block content
+  link(rel="stylesheet", href='/stylesheets/wishlist.css')
+  div.content-container
+    div.left-nav-bar
+      ul
+        each wishlist in wishlistsByUser
+          li= wishlist.name
+    div.middle-section
+      form(method="post" action=`/wishlists/${wishlist.id}/edit`)
+        input(type="hidden" name="_csrf" value=csrfToken)
+        input(type='text' name='name' value=wishlist.name)
+        h3 By #{wishlist.User.username}
+        textarea(name='description') #{wishlist.description}
+        label(for='isPublic') Privacy Settings
+        if wishlist.isPublic
+            input(type="radio", name="isPublic" value="true" id="true" checked)
+            label(for="true") Public
+            input(type="radio", name="isPublic" value="false" id="false")
+            label(for="false") Private
+        else
+            input(type="radio", name="isPublic" value="true" id="true")
+            label(for="true") Public
+            input(type="radio", name="isPublic" value="false" id="false" checked)
+            label(for="false") Private
+        button(type="submit") Save Changes
+        a(href=`/wishlists/${wishlist.id}/delete`) Delete Wishlist
+        div
+          if (items)
+            each item in items
+              div
+                if (authorized)
+                  input(type="checkbox", name="purchased" value="purchased")
+                span
+                  a(href=`/items/${item.id}`) #{item.name}
+                span #{item.price}
