@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+  h1= `${item.name}`
+  ul
+    li= item.price
+    li= item.categoryId
+    li= item.link
+    li= item.purchased
+
+  a(href=`/wishlists/${wishlistId}/items/${item.id}/edit`) Edit item
+  br
+  a(href=`/wishlists/${wishlistId}`) Back to Wishlist

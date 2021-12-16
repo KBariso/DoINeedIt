@@ -17,7 +17,7 @@ block content
       if (wishlist.description)
         p #{wishlist.description}
       if (authorized)
-        a(href="/items/new") Add an item
+        a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
         a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
       div
         if (items)
