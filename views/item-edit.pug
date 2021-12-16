@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    form(action=`/items/edit/${item.id}`, method="post")
+    form(action=`wishlists/${wishListId}/items/edit/${item.id}`, method="post")
       input(type="hidden" name="_csrf" value=csrfToken)
       label(for="name") Name
       input(type="text", name="name" value=name)
@@ -16,8 +16,10 @@ block content
       input(type="url", name="link" value=link)
       label(for="purchased") Purchased
       input(type="checkbox", name="purchased" value="purchased")
-      button(type="submit") Update Park
+      button(type="submit") Save changes
       a(href=`/items/${item.id}`) Cancel
+    form(method='post' action=`/items/${item.id}/delete`)
+      button(type='submit') Delete item
     if errors
       ul(class='error-list')
         each error in errors

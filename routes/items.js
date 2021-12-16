@@ -9,32 +9,50 @@ const router = express.Router();
 
 router.use(requireAuth);
 
+
 /* GET items page */
 
-router.get('/', asyncHandler(async (req, res) => {
-  const itemsByUser = await db.Item.findAll({
-    include: {
-      model: db.Wishlist
-    },
-    order: [['updatedAt', 'DESC']]
+router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
+  const wishListId = req.params.id
+  const items = await db.Item.findAll({
+    where: {
+      wishListId
+    }
   })
 
-  console.log(itemsByUser)
+  console.log(items)
   res.render('items', {
     title: 'Items',
-    itemsByUser
+    items,
+    wishListId
   })
 }))
 
+/* GET items by Id page */
+
+router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, res) => {
+  const itemId = parseInt(req.params.itemId, 10)
+  const item = await db.Item.findByPk(itemId);
+
+  res.render('item-details', {
+    title: `${item.name}`,
+    item,
+    wishlistId: req.params.id
+  })
+
+}))
+
+
 /* GET add item page */
 
-router.get('/new', csrfProtection, asyncHandler(async(req, res) => {
+router.get('/wishlists/:id(\\d+)/items/new', csrfProtection, asyncHandler(async(req, res) => {
   const item = await db.Item.build();
   const categories = await db.Category.findAll();
   res.render('item-new', {
     title: 'Add item',
     item,
     categories,
+    wishListId : req.params.id,
     csrfToken: req.csrfToken()
   })
 }))
@@ -57,8 +75,9 @@ const itemValidators = [
 
 /* POST add item page */
 
-router.post('/new', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
-  const {name, price, link, purchased, categoryId, wishlistId} = req.body;
+router.post('/wishlists/:id(\\d+)/items/new', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
+  const wishListId = req.params.id
+  const {name, price, link, purchased, categoryId} = req.body;
 
   const categories = await db.Category.findAll();
 
@@ -68,14 +87,14 @@ router.post('/new', csrfProtection, itemValidators, asyncHandler(async(req, res)
     link,
     purchased,
     categoryId,
-    wishlistId
+    wishListId
   })
 
   const validatorErrors = validationResult(req);
 
   if (validatorErrors.isEmpty()) {
     await item.save();
-    res.redirect('/items')
+    res.redirect(`/wishlists/${wishListId}/items`)
   } else {
     const errors = validatorErrors.array().map(error => error.msg);
     res.render('item-new', {
@@ -90,16 +109,57 @@ router.post('/new', csrfProtection, itemValidators, asyncHandler(async(req, res)
 
 /* GET Edit item page */
 
-router.get('/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
-  const itemId = parseInt(req.params.id, 10)
+router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
+  const itemId = parseInt(req.params.itemId, 10)
   const item = await db.Item.findByPk(itemId);
   res.render('item-edit', {
     title: 'Edit item',
     item,
+    wishListId: req.params.id,
     csrfToken: req.csrfToken()
   })
 }))
 
+
+/* POST Edit item page */
+
+router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
+  const itemId = parseInt(req.params.itemId, 10)
+  const itemToUpdate = await db.Item.findByPk(itemId);
+  const categories = await db.Category.findAll();
+  const {name, price, link, purchased, categoryId, wishlistId} = req.body;
+
+  const item = {
+    name,
+    price,
+    link,
+    purchased}
+
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+    await item.update(item);
+    res.redirect(`/items/${itemId}`)
+  } else {
+    const errors = validatorErrors.array().map(error => error.msg);
+    res.render('item-new', {
+      title: 'Add item',
+      item: {...item, id: itemId},
+      categories,
+      errors,
+      csrfToken: req.csrfToken()
+    })
+  }
+
+/* DELETE an item */
+router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/delete', csrfProtection, asyncHandler(async(req, res) => {
+  const itemId = req.params.itemId
+  const item = await db.Item.findByPk(itemId);
+  await item.destroy();
+  res.redirect('/wishlists')
+}))
+
+}))
 
 
 

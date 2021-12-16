@@ -4,11 +4,11 @@ const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('../utils');
 const { requireAuth, isAuthorized } = require('../auth');
 const { check, validationResult } = require('express-validator');
+const app = require('../app');
 
 const router = express.Router();
 
 router.use(requireAuth);
-
 
 /* GET Wishlists page by Id. */
 

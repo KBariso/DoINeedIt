@@ -10,7 +10,7 @@ block content
       h1 #{wishlist.name}
       h3 By #{wishlist.User.username}
       if (authorized)
-        a(href="/items/new") Add an item
+        a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
         a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
       div
         if (items)
