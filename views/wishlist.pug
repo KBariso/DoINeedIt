@@ -26,8 +26,13 @@ block content
               if (authorized)
                 input(type="checkbox", name="purchased" value="purchased")
               span
-                a(href=`/items/${item.id}`) #{item.name}
+                a(href=`/wishlists/${wishlist.id}/items/${item.id}`) #{item.name}
               span #{item.price}
+              if (authorized)
+                a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
+                  i(class="far fa-edit")
+                a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
+                  i(class="far fa-trash-alt")
       p Total cost: $#{totalPrice}
       div
         if comments
@@ -38,4 +43,4 @@ block content
                         p #{comment.content}
                         p #{comment.createdAt}
 
-//- block wishlistContent
+    //- block wishlistContent
