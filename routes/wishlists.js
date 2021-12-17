@@ -183,7 +183,7 @@ router.get("/:id/delete", asyncHandler(async(req, res, next) => {
       error.status = 404
       next(error)
     }
-}))
+}));
 
 
 
