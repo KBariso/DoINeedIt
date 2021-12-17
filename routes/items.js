@@ -21,6 +21,7 @@ router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
 
 router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
+  const wishlistId = parseInt(req.params.id, 10)
   const item = await db.Item.findByPk(itemId,  {
     include: {
       all: true
@@ -49,18 +50,28 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, 
     include: {
         all: true
     },
-})
+  })
+
+  let items = await db.Item.findAll({
+    where: {
+        wishListId: wishlistId
+    },
+    include: {
+        all: true
+    },
+  })
 
   const authorized = isAuthorized(req.session.auth.userId, item.Wishlist.userId);
 
   res.render('item-details', {
     title: `${item.name}`,
     item,
+    items,
     authorized,
     wishlistsByUser,
     comments,
     wishlist,
-    wishlistId: req.params.id
+    wishlistId
   })
 
 }))
