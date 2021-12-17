@@ -26,8 +26,13 @@ block content
               if (authorized)
                 input(type="checkbox", name="purchased" value="purchased")
               span
-                a(href=`/items/${item.id}`) #{item.name}
+                a(href=`/wishlists/${wishlist.id}/items/${item.id}`) #{item.name}
               span #{item.price}
+              if (authorized)
+                a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
+                  i(class="far fa-edit")
+                a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
+                  i(class="far fa-trash-alt")
       p Total cost: $#{totalPrice}
       h3 Comments
       form(action=`/wishlists/${wishlist.id}/comments/new`, method="post")
@@ -42,5 +47,7 @@ block content
                         p #{comment.User.username}
                         p #{comment.content}
                         p #{comment.createdAt}
+
                         a(href=`/comments/${comment.id}/edit`) Edit Comment
 //- block wishlistContent
+

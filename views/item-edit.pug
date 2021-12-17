@@ -1,12 +1,13 @@
 extends layout.pug
 
 block content
-    form(action=`/wishlists/${wishListId}/items/${item.id}/edit`, method="post")
+    h1(class="form-title") Edit item
+    form(action=`/wishlists/${wishListId}/items/${item.id}/edit`, method="post" class="auth-form")
       input(type="hidden" name="_csrf" value=csrfToken)
       label(for="name") Name
       input(type="text", name="name" value=item.name)
       label(for="categoryId") Category
-      select(name="categoryId" selected=item.categoryId required=true)
+      select(name="categoryId" required=true)
         option(selected="true" disabled="disabled") --Select a category--
         each category in categories
           option(value=category.id)= category.name
@@ -15,11 +16,14 @@ block content
       label(for="link") Link
       input(type="url", name="link" value=item.link)
       label(for="purchased") Purchased
-      input(type="checkbox", name="purchased" value="purchased")
+      if (item.purchased)
+        input(type="checkbox", name="purchased" value="true" checked)
+      else
+        input(type="checkbox", name="purchased" value="false")
       button(type="submit") Save changes
-      a(href=`/wishlists/${wishListId}/items/${item.id}`) Cancel
-    form(method='post' action=`/wishlists/${wishListId}/items/${item.id}/delete`)
-      button(type='submit') Delete item
+    a(href=`/wishlists/${wishListId}/items/${item.id}`) Cancel
+    br
+    a(href=`/wishlists/${wishListId}`) Back to Wishlist
     if errors
       ul(class='error-list')
         each error in errors
