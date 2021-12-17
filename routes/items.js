@@ -15,17 +15,6 @@ router.use(requireAuth);
 router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
   const wishListId = req.params.id;
   res.redirect(`/wishlists/${wishListId}`)
-  // const items = await db.Item.findAll({
-  //   where: {
-  //     wishListId
-  //   }
-  // })
-
-  // res.render('items', {
-  //   title: 'Items',
-  //   items,
-  //   wishListId
-  // })
 }))
 
 /* GET items by Id page */
@@ -114,7 +103,7 @@ router.post('/wishlists/:id(\\d+)/items/new', csrfProtection, itemValidators, as
 
 /* GET Edit item page */
 
-router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, itemValidators, asyncHandler(async(req, res) => {
+router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, itemValidators, asyncHandler(async(req, res, next) => {
   const itemId = parseInt(req.params.itemId, 10)
   const item = await db.Item.findByPk(itemId, {
     include: {
@@ -124,15 +113,20 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, item
   const categories = await db.Category.findAll();
 
   const authorized = isAuthorized(req.session.auth.userId, item.Wishlist.userId);
-
-  res.render('item-edit', {
-    title: 'Edit item',
-    item,
-    authorized,
-    wishListId: req.params.id,
-    categories,
-    csrfToken: req.csrfToken()
-  })
+  if(authorized) {
+    res.render('item-edit', {
+      title: 'Edit item',
+      item,
+      authorized,
+      wishListId: req.params.id,
+      categories,
+      csrfToken: req.csrfToken()
+    })
+  } else {
+      const error = new Error()
+      error.status = 404
+      next(error)
+  }
 }))
 
 
@@ -177,15 +171,25 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, ite
 }))
 
 /* DELETE an item */
-router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/delete', csrfProtection, asyncHandler(async(req, res) => {
+router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/delete', csrfProtection, asyncHandler(async(req, res, next) => {
   const wishListId = req.params.id;
   const itemId = req.params.itemId
-  const item = await db.Item.findByPk(itemId);
-  if (item) {
+  const item = await db.Item.findByPk(itemId, {
+    include: {
+      all: true
+    }
+  });
+  const authorized = isAuthorized(req.session.auth.userId, item.Wishlist.userId);
+
+  if(authorized) {
     await item.destroy();
-  return res.redirect(`/wishlists/${wishListId}`)
+    return res.redirect(`/wishlists/${wishListId}`)
+  } else {
+    const error = new Error()
+    error.status = 404
+    next(error)
   }
-}))
+}));
 
 
 
