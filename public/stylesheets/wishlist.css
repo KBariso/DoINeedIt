@@ -23,7 +23,7 @@ body {
     border-radius: 10px;
     margin: 10px 0px;
     padding: 10px;
-    min-width: 400px;
+    min-width: 600px;
     width: 50%;
     overflow: hidden;
 }
@@ -57,7 +57,6 @@ body {
 }
 
 .comments-container {
-    overflow: scroll;
     height: 115%;
     /* border: 2px solid black; */
 }
@@ -96,8 +95,43 @@ body {
     margin-left: 5px;
 }
 
-
 .item-name {
     display: flex;
     justify-content: space-between;
+    padding: 5px 0;
 }
+
+.total-cost {
+    text-align: end;
+    margin-right: 57px;
+
+}
+
+.anchor {
+    text-decoration: none;
+}
+
+.anchor:hover {
+    opacity: 50%;
+}
+
+.wishlist-button {
+    margin-bottom: 10px;
+}
+
+.wishlist-button > a {
+    text-decoration: none;
+    background-color: #d24b03;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    margin: 5px;
+}
+
+/* .wishlist-summary {
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 10px;
+} */

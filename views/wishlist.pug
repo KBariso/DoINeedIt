@@ -11,7 +11,7 @@ block content
       ul
         each wishlist in wishlistsByUser
           li.user-wishlists
-            a(href=`/wishlists/${wishlist.id}`) #{wishlist.name}
+            a(href=`/wishlists/${wishlist.id}` class="anchor") #{wishlist.name}
     div.middle-section
       div.wishlist-info
         h1 #{wishlist.name}
@@ -19,24 +19,26 @@ block content
         if (wishlist.description)
           p #{wishlist.description}
         if (authorized)
-          a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
-          a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
+          div.wishlist-button
+            a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
+            a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
         div
           if (items)
             each item in items
               div.item-name
-                if (authorized)
-                  input(type="checkbox", name="purchased" value="purchased")
-                span
-                  a(href=`/wishlists/${wishlist.id}/items/${item.id}`) #{item.name}
-                span $#{item.price}
+                div
+                  if (authorized)
+                    input(type="checkbox", name="purchased" value="true")
+                  span
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
                 div.item-button
+                  span $#{item.price}
                   if (authorized)
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
                       i(class="far fa-edit")
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
                       i(class="far fa-trash-alt")
-        p.total-cost Total cost: $#{totalPrice}
+        //- p.total-cost Total cost: $#{totalPrice}
         h3 Comments
         form(action=`/wishlists/${wishlist.id}/comments/new`, method="post" class="post-comment")
           input(type="hidden" name="_csrf" value=csrfToken)
@@ -57,4 +59,7 @@ block content
                                 i(class="far fa-trash-alt")
                         p #{comment.content}
                         p.comment-date #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
+    div.wishlist-summary
+      p.total-cost Total cost: $#{totalPrice}
+
 //- block wishlistContent
