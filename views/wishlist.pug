@@ -6,10 +6,11 @@ block content
     div.left-nav-bar
       span My Wishlists
       span
-        a(href="/wishlists/new") +
+        a(href="/wishlists/new")
+          i(class="far fa-plus-square")
       ul
         each wishlist in wishlistsByUser
-          li
+          li.user-wishlists
             a(href=`/wishlists/${wishlist.id}`) #{wishlist.name}
     div.middle-section
       h1 #{wishlist.name}
@@ -39,11 +40,11 @@ block content
         input(type="hidden" name="_csrf" value=csrfToken)
         input(type="text", name="content" value=content)
         button(type="submit") Post Comment
-      div
+      div.comments-container
         if comments
             ul
                 each comment in comments
-                    li
+                    li.comment-border
                         p #{comment.User.username}
                         p #{comment.content}
                         p #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}

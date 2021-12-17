@@ -3,7 +3,6 @@ html {
 }
 
 body {
-    background-color: chartreuse;
     height: 100%;
 }
 .content-container {
@@ -12,12 +11,48 @@ body {
     height: 100%;
 }
 .left-nav-bar {
-    background-color: blueviolet;
+    display: block;
     width: 200px;
+    padding: 20px;
 }
 
 .middle-section {
-    background-color: cadetblue;
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 10px;
     min-width: 400px;
     width: 50%;
+}
+
+.user-wishlists {
+    list-style-type: none;
+    padding: 5px 0px;
+}
+
+.user-wishlists > a {
+    text-decoration: none;
+}
+
+.far {
+    margin-left: 10px;
+    padding: 1px;
+}
+
+.far:hover {
+    background-color: #0077B8;
+    color:white;
+}
+
+.comment-border {
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 5px;
+    padding-left: 10px;
+    list-style-type: none;
+}
+
+.comments-container {
+    height: 700px;
+    overflow: auto;
 }

@@ -10,7 +10,8 @@ html
   body
     nav(class='nav-bar')
       div(class='nav-left')
-        a(href='/' id='home' class='nav-button') Do I Need It?
+        a(href='/')
+          img(src='/images/Shrug-Emoji-white.png' width='100px')
       div(class='nav-right')
         if authenticated
           p(class='welcome') Welcome, #{user.fullName}!
@@ -18,7 +19,7 @@ html
             button(type='submit' class='nav-button') Logout
         else
           a(href='/users/login' class='nav-button') Log In
-          a(href='/users/signup' class='nav-button') Sign Up for FREE
+          a(href='/users/signup' class='nav-button sign-up') Sign Up for FREE
 
 
     block content
