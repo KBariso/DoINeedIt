@@ -21,19 +21,57 @@ router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
 
 router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
+  const wishlistId = parseInt(req.params.id, 10)
   const item = await db.Item.findByPk(itemId,  {
     include: {
       all: true
     }
   });
 
+  const wishlistsByUser = await db.Wishlist.findAll({
+    include: {
+      all: true
+    },
+    where: {
+      userId: req.session.auth.userId,
+    },
+  });
+
+  const wishlist = await db.Wishlist.findByPk(item.wishListId, {
+    include: {
+        all: true,
+    },
+  });
+
+  const comments = await db.Comment.findAll({
+    where: {
+        wishListId: wishlist.id
+    },
+    include: {
+        all: true
+    },
+  })
+
+  let items = await db.Item.findAll({
+    where: {
+        wishListId: wishlistId
+    },
+    include: {
+        all: true
+    },
+  })
+
   const authorized = isAuthorized(req.session.auth.userId, item.Wishlist.userId);
 
   res.render('item-details', {
     title: `${item.name}`,
     item,
+    items,
     authorized,
-    wishlistId: req.params.id
+    wishlistsByUser,
+    comments,
+    wishlist,
+    wishlistId
   })
 
 }))
