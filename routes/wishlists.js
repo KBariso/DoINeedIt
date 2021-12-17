@@ -60,6 +60,7 @@ router.get(
       wishlist,
       items: wishlist.Items,
       comments,
+      userId: req.session.auth.userId,
       authorized,
       totalPrice,
       csrfToken: req.csrfToken(),
@@ -126,7 +127,7 @@ router.post(
 router.get(
   "/:id/edit",
   csrfProtection,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const wishlist = await db.Wishlist.findByPk(req.params.id, {
       include: {
         all: true,
@@ -141,13 +142,19 @@ router.get(
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
-    res.render("edit-wishlist", {
-      title: "Edit Wishlist",
-      wishlistsByUser,
-      wishlist,
-      items: wishlist.Items,
-      csrfToken: req.csrfToken(),
-    });
+    if(authorized) {
+      res.render("edit-wishlist", {
+        title: "Edit Wishlist",
+        wishlistsByUser,
+        wishlist,
+        items: wishlist.Items,
+        csrfToken: req.csrfToken(),
+      });
+    } else {
+      const error = new Error()
+      error.status = 404
+      next(error)
+    }
   })
 );
 
@@ -165,10 +172,17 @@ router.post(
   })
 );
 
-router.get("/:id/delete", asyncHandler(async(req, res) => {
+router.get("/:id/delete", asyncHandler(async(req, res, next) => {
     const wishlist = await db.Wishlist.findByPk(req.params.id);
-    await wishlist.destroy();
-    res.redirect('/')
+    const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
+    if(authorized) {
+      await wishlist.destroy();
+      res.redirect('/')
+    } else {
+      const error = new Error()
+      error.status = 404
+      next(error)
+    }
 }))
 
 
