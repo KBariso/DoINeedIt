@@ -4,11 +4,13 @@ html {
 
 body {
     height: 100%;
+
 }
 .content-container {
     display: flex;
     justify-content: stretch;
-    height: 100%;
+    /* height: 115%; */
+
 }
 .left-nav-bar {
     display: block;
@@ -23,6 +25,7 @@ body {
     padding: 10px;
     min-width: 400px;
     width: 50%;
+    overflow: hidden;
 }
 
 .user-wishlists {
@@ -45,14 +48,56 @@ body {
 }
 
 .comment-border {
-    border: 1px solid gray;
+    border: 1px solid rgba(0,0,0,0.2);
     border-radius: 10px;
     margin: 5px;
-    padding-left: 10px;
+    padding: 15px 15px;
     list-style-type: none;
+    font-size: 12px;
 }
 
 .comments-container {
-    height: 700px;
-    overflow: auto;
+    overflow: scroll;
+    height: 115%;
+    /* border: 2px solid black; */
+}
+
+.comment-date {
+    margin: 0;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wishlist-info {
+    padding: 10px;
+}
+
+.comment-box {
+    padding: 3px;
+    border-radius: 3px;
+    border: 1px solid gray;
+    width: 75%;
+}
+
+.post-comment {
+    display: flex;
+    margin-top: 5px;
+    /* justify-content: space-between; */
+
+}
+
+.comment-button {
+    display: flex;
+    justify-self: flex-end;
+    width: fit-content;
+    margin-left: 5px;
+}
+
+
+.item-name {
+    display: flex;
+    justify-content: space-between;
 }
