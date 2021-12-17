@@ -1,9 +1,8 @@
-extends layout.pug
+extends wishlist.pug
 
-block content
+block wishlistContent
   h1= `${item.name}`
     ul
-      li Wishlist: #{item.Wishlist.name}
       li Price: $#{item.price}
       li Category: #{item.Category.name}
       if (item.link)
@@ -12,9 +11,7 @@ block content
         li Purchased
           i(class="fas fa-check-square")
   if (authorized)
-    a(href=`/wishlists/${wishlistId}/items/${item.id}/edit`) Edit item
-    br
-    a(href=`/wishlists/${wishlistId}/items/${item.id}/delete`) Delete item
-
-  br
-  a(href=`/wishlists/${wishlistId}`) Back to Wishlist
+    a(href=`/wishlists/${wishlistId}/items/${item.id}/edit`)
+      i(class="far fa-edit")
+    a(href=`/wishlists/${wishlistId}/items/${item.id}/delete`)
+      i(class="far fa-trash-alt")

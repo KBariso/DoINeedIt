@@ -19,7 +19,7 @@ block content
       if (item.purchased)
         input(type="checkbox", name="purchased" value="true" checked)
       else
-        input(type="checkbox", name="purchased" value="false")
+        input(type="checkbox", name="purchased" value="true")
       button(type="submit") Save changes
     a(href=`/wishlists/${wishListId}/items/${item.id}`) Cancel
     br
