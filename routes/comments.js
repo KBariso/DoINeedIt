@@ -107,7 +107,7 @@ router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, r
         },
         include: {
             all: true
-        }
+        },
     })
     const wishlistsByUser = await db.Wishlist.findAll({
         where: {
@@ -130,9 +130,9 @@ router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, r
 }));
 
 router.post('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
-    // const wishlist = await db.Wishlist.findByPk(req.params.id);
     const commentId = parseInt(req.params.id, 10);
     const commentToUpdate = await db.Comment.findByPk(commentId);
+    const wishlist = await db.Wishlist.findByPk(commentToUpdate.wishListId);
 
     // const authorized = isAuthorized(req.session.auth.userId, comment.id);
 
@@ -160,29 +160,17 @@ router.post('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, 
 }));
 
 
-
-/* Create a DELETE /comments/:id Route */
-router.get('/comments/delete/:id(\\d+)', csrfProtection,
+router.get('/comments/:id(\\d+)/delete', csrfProtection,
 asyncHandler(async (req, res) => {
-    const comment = await db.Comment.findByPk(req.params.id);
+    const commentId = parseInt(req.params.id, 10);
+    const commentToDelete = await db.Comment.findByPk(commentId);
+    const wishlist = await db.Wishlist.findByPk(commentToDelete.wishListId);
 
-    res.render('delete-comment', {
-        title: 'Delete Comment',
-        comment,
-        csrfToken: req.csrfToken(),
-    })
-}))
+    // const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
-
-router.post('/comments/delete/:id(\\d+)', csrfProtection,
-asyncHandler(async (req, res) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
-    const comment = await db.Comment.findByPk(req.params.id);
-    await comment.destroy()
+    await commentToDelete.destroy();
     res.redirect(`/wishlists/${wishlist.id}`)
 }))
-
-
 
 
 module.exports = router;

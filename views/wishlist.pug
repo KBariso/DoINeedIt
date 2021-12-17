@@ -46,8 +46,8 @@ block content
                     li
                         p #{comment.User.username}
                         p #{comment.content}
-                        p #{comment.createdAt}
+                        p #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
 
                         a(href=`/comments/${comment.id}/edit`) Edit Comment
+                        a(href=`/comments/${comment.id}/delete`) Delete Comment
 //- block wishlistContent
-
