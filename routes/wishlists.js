@@ -30,7 +30,8 @@ router.get(
       where: {
           wishListId: wishlist.id
       },
-      include: { model: db.User }
+      include: { model: db.User },
+      order: [['updatedAt', 'DESC']]
   })
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);

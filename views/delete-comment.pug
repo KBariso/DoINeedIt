@@ -1,1 +1,64 @@
-extends layout.pug
+//- extends layout.pug
+
+//- block content
+//-   link(rel="stylesheet", href='/stylesheets/wishlist.css')
+//-   div.content-container
+//-     div.left-nav-bar
+//-       span My Wishlists
+//-       span
+//-         a(href="/wishlists/new") +
+//-       ul
+//-         each wishlist in wishlistsByUser
+//-           li
+//-             a(href=`/wishlists/${wishlist.id}`) #{wishlist.name}
+//-     div.middle-section
+//-       h1 #{wishlist.name}
+//-       h3 By #{wishlist.User.username}
+//-       if (wishlist.description)
+//-         p #{wishlist.description}
+//-       if (authorized)
+//-         a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
+//-         a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
+//-       div
+//-         if (items)
+//-           each item in items
+//-             div
+//-               if (authorized)
+//-                 input(type="checkbox", name="purchased" value="purchased")
+//-               span
+//-                 a(href=`/items/${item.id}`) #{item.name}
+//-               span #{item.price}
+//-       p Total cost: $#{totalPrice}
+//-       h3 Comments
+//-       form(action=`/wishlists/${wishlist.id}/comments/new`, method="post")
+//-         input(type="hidden" name="_csrf" value=csrfToken)
+//-         input(type="text", name="content" value=content)
+//-         button(type="submit") Post Comment
+//-       div
+//-         if comments
+//-             ul
+//-                 each comment in comments
+//-                     if comment.id == `${editId}`
+//-                         form(action=`/comments/${comment.id}/edit`, method="post")
+//-                             input(type="hidden" name="_csrf" value=csrfToken)
+//-                             input(type="text", name="content" value=content)
+//-                             button(type="submit") Save Changes
+//-                     else
+//-                         li
+//-                             p #{comment.User.username}
+//-                             p #{comment.content}
+//-                             p #{comment.createdAt}
+//-       div
+//-         if comments
+//-             ul
+//-                 each comment in comments
+//-                     if comment.id == `${deleteId}`
+//-                         form(action=`/comments/${comment.id}/delete`, method="post")
+//-                             input(type="hidden" name="_csrf" value=csrfToken)
+//-                             //- input(type="text", name="content" value=content)
+//-                             button(type="submit") Delete Comment
+//-                     else
+//-                         li
+//-                             p #{comment.User.username}
+//-                             p #{comment.content}
+//-                             p #{comment.createdAt}
