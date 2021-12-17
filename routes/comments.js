@@ -94,7 +94,7 @@ router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidato
 
 /* Create a PUT /comments/:id Route */
 
-router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
+router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res, next) => {
     const comment = await db.Comment.findByPk(req.params.id);
     const wishlist = await db.Wishlist.findByPk(comment.wishListId, {
         include: {
@@ -114,18 +114,24 @@ router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, r
           userId: req.session.auth.userId,
         },
     });
-    // const authorized = isAuthorized(req.session.auth.userId, comment.id);
+    const authorized = isAuthorized(req.session.auth.userId, comment.userId);
 
-    res.render('edit-comment', {
-        title: 'Edit Comment',
-        comment,
-        comments,
-        editId: comment.id,
-        wishlistsByUser,
-        wishlist,
-        items: wishlist.Items,
-        csrfToken: req.csrfToken(),
-    })
+    if(authorized) {
+        res.render('edit-comment', {
+            title: 'Edit Comment',
+            comment,
+            comments,
+            editId: comment.id,
+            wishlistsByUser,
+            wishlist,
+            items: wishlist.Items,
+            csrfToken: req.csrfToken(),
+        })
+    } else {
+        const error = new Error()
+        error.status = 404
+        next(error)
+    }
 
 }));
 
@@ -161,15 +167,21 @@ router.post('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, 
 
 
 router.get('/comments/:id(\\d+)/delete', csrfProtection,
-asyncHandler(async (req, res) => {
+asyncHandler(async (req, res, next) => {
     const commentId = parseInt(req.params.id, 10);
     const commentToDelete = await db.Comment.findByPk(commentId);
     const wishlist = await db.Wishlist.findByPk(commentToDelete.wishListId);
 
-    // const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
+    const authorized = isAuthorized(req.session.auth.userId, commentToDelete.userId);
 
-    await commentToDelete.destroy();
-    res.redirect(`/wishlists/${wishlist.id}`)
+    if(authorized) {
+        await commentToDelete.destroy();
+        res.redirect(`/wishlists/${wishlist.id}`)
+    } else {
+        const error = new Error()
+        error.status = 404
+        next(error)
+    }
 }))
 
 
