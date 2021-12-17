@@ -29,6 +29,11 @@ block content
                 a(href=`/items/${item.id}`) #{item.name}
               span #{item.price}
       p Total cost: $#{totalPrice}
+      h3 Comments
+      form(action=`/wishlists/${wishlist.id}/comments/new`, method="post")
+        input(type="hidden" name="_csrf" value=csrfToken)
+        input(type="text", name="content" value=content)
+        button(type="submit") Post Comment
       div
         if comments
             ul
@@ -37,5 +42,5 @@ block content
                         p #{comment.User.username}
                         p #{comment.content}
                         p #{comment.createdAt}
-
+                        a(href=`/comments/${comment.id}/edit`) Edit Comment
 //- block wishlistContent

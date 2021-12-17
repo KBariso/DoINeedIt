@@ -12,7 +12,7 @@ router.use(requireAuth);
 /* GET Wishlists page by Id. */
 
 router.get(
-  "/:id(\\d+)",
+  "/:id(\\d+)", csrfProtection,
   asyncHandler(async (req, res) => {
     const wishlist = await db.Wishlist.findByPk(req.params.id, {
       include: {
@@ -60,7 +60,8 @@ router.get(
       items: wishlist.Items,
       comments,
       authorized,
-      totalPrice
+      totalPrice,
+      csrfToken: req.csrfToken(),
     });
   })
 );
