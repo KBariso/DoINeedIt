@@ -1,7 +1,8 @@
 extends layout.pug
 
 block content
-    form(action=`/wishlists/${wishListId}/items/new`, method="post")
+    h1(class="form-title") Add item
+    form(action=`/wishlists/${wishListId}/items/new`, method="post" class="auth-form")
       input(type="hidden" name="_csrf" value=csrfToken)
       label(for="name") Name
       input(type="text", name="name" value=item.name)
@@ -15,6 +16,7 @@ block content
       label(for="link") Link
       input(type="url", name="link" value=item.link)
       button(type="submit") Add Item
+    a(href=`/wishlists/${wishListId}`) Back to Wishlist
     if errors
       ul(class='error-list')
         each error in errors
