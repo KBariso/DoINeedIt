@@ -48,12 +48,18 @@ body {
 }
 
 .comment-border {
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid lightgray;
     border-radius: 10px;
     margin: 5px;
     padding: 15px 15px;
     list-style-type: none;
     font-size: 12px;
+}
+
+.comment-border:hover {
+    background-color: #fffac0;
+    /* opacity: 50%; */
+    border: 1px solid gray;
 }
 
 .comments-container {
@@ -77,9 +83,15 @@ body {
 .comment-box {
     padding: 3px;
     border-radius: 3px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     width: 75%;
 }
+
+.comment-box:hover {
+    border: 1px solid gray;
+}
+
+
 
 .post-comment {
     display: flex;
@@ -93,6 +105,10 @@ body {
     justify-self: flex-end;
     width: fit-content;
     margin-left: 5px;
+}
+
+.edit-content {
+    font-size: 12px;
 }
 
 .item-name {

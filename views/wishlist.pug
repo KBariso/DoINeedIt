@@ -39,26 +39,26 @@ block content
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
                       i(class="far fa-trash-alt")
         //- p.total-cost Total cost: $#{totalPrice}
-        h3 Comments
+        //- h3 Comments
         form(action=`/wishlists/${wishlist.id}/comments/new`, method="post" class="post-comment")
           input(type="hidden" name="_csrf" value=csrfToken)
-          input(type="text", name="content" class="comment-box" value=content)
-          button(type="submit" class="comment-button") Post Comment
+          input(type="text", name="content" class="comment-box" placeholder="Add a comment..." value=content)
+          button(type="submit" class="comment-button") Add Comment
       div.comments-container
         if comments
-            ul
-                each comment in comments
-                    li.comment-border
-                        div.comment-header
-                          span #{comment.User.username}
-                          if userId == `${comment.userId}`
-                            span
-                              a(href=`/comments/${comment.id}/edit`)
-                                i(class="far fa-edit")
-                              a(href=`/comments/${comment.id}/delete`)
-                                i(class="far fa-trash-alt")
-                        p #{comment.content}
-                        p.comment-date #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
+          ul
+            each comment in comments
+              li.comment-border
+                div.comment-header
+                  span #{comment.User.username}
+                  if userId == `${comment.userId}`
+                    span
+                      a(href=`/comments/${comment.id}/edit`)
+                        i(class="far fa-edit")
+                      a(href=`/comments/${comment.id}/delete`)
+                        i(class="far fa-trash-alt")
+                p #{comment.content}
+                p.comment-date #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
     div.wishlist-summary
       p.total-cost Total cost: $#{totalPrice}
 
