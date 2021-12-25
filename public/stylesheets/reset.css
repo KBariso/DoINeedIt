@@ -83,3 +83,76 @@ h1 {
 .sign-up.nav-button {
   border: 1px solid rgb(241, 241, 241);
 }
+
+.bottom-bar {
+  position:fixed;
+  bottom: 0px;
+  display: flex;
+  width: 100%;
+  padding: 40px 15px;
+  justify-content: space-evenly;
+  background-color: white;
+  color: black;
+}
+
+.suhayl-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.suhayl-links {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 65%;
+}
+
+
+.megan-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.megan-links {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 65%;
+}
+
+
+.sornam-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.sornam-links {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 65%;
+}
+
+.kielvin-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.kielvin-links {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 65%;
+}
