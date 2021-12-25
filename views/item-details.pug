@@ -1,17 +1,22 @@
 extends wishlist.pug
 
 block wishlistContent
-  h1= `${item.name}`
-    ul
-      li Price: $#{item.price}
-      li Category: #{item.Category.name}
-      if (item.link)
-        a(href=`${item.link}`) #{item.link}
-      if (item.purchased)
-        li Purchased
-          i(class="fas fa-check-square")
-  if (authorized)
-    a(href=`/wishlists/${wishlistId}/items/${item.id}/edit`)
-      i(class="far fa-edit")
-    a(href=`/wishlists/${wishlistId}/items/${item.id}/delete`)
-      i(class="far fa-trash-alt")
+  div.items-container
+    div.items-firstline
+      span.item-header= `${item.name}`
+      if (authorized)
+        span
+          a(href=`/wishlists/${wishlistId}/items/${item.id}/edit`)
+            i(class="far fa-edit")
+          a(href=`/wishlists/${wishlistId}/items/${item.id}/delete`)
+            i(class="far fa-trash-alt")
+    div.item-details
+      ul
+        li <strong>Price:</strong> $#{item.price}
+        li <strong>Category:</strong> #{item.Category.name}
+        if (item.link)
+          li
+            a(href=`${item.link}`) #{item.link}
+        if (item.purchased)
+          li <strong>Purchased</strong>
+            i(class="fas fa-check-square")

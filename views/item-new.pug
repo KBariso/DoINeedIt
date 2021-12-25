@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
     h1(class="form-title") Add item
-    form(action=`/wishlists/${wishListId}/items/new`, method="post" class="auth-form")
+    form(action=`/wishlists/${wishListId}/items/new`, method="post" class="update-form")
       input(type="hidden" name="_csrf" value=csrfToken)
       label(for="name") Name
       input(type="text", name="name" value=item.name)

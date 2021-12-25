@@ -158,3 +158,35 @@ body {
     border-radius: 10px;
     padding: 10px;
 }
+
+.items-container {
+    background-color: rgba(255, 255, 255, 0.897);
+    box-shadow: -2px 0 0 #d9d9d9;
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 10px;
+    min-width: 400px;
+    width: 35%;
+    overflow: hidden;
+}
+
+.items-firstline {
+    padding: 15px 0;
+}
+.item-header {
+    font-size: 19px;
+    font-weight: 550;
+    padding: 10px;
+    color: #0077B8;
+}
+
+.item-details > ul {
+    list-style-type: none;
+    padding: 10px;
+    color: rgb(87, 86, 86);
+    font-size: 1rem
+}
+
+.item-details > ul > li {
+    padding: 3px;
+}

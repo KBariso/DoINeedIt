@@ -60,7 +60,8 @@ block content
                         i(class="far fa-trash-alt")
                 p #{comment.content}
                 p.comment-date #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
-    div.wishlist-summary
-      p.total-cost Total cost: $#{totalPrice}
+    if(totalPrice)
+      div.wishlist-summary
+        p.total-cost Total cost: $#{totalPrice}
 
     block wishlistContent
