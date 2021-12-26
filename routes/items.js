@@ -22,6 +22,7 @@ router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
 router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
   const wishlistId = parseInt(req.params.id, 10)
+  let userId = req.session.auth.userId
   const item = await db.Item.findByPk(itemId,  {
     include: {
       all: true
@@ -48,8 +49,9 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', csrfProtection, asyncHand
         wishListId: wishlist.id
     },
     include: {
-        all: true
+        all: true,
     },
+    order: [['updatedAt', 'DESC']]
   })
 
   let items = await db.Item.findAll({
@@ -68,6 +70,7 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', csrfProtection, asyncHand
     item,
     items,
     authorized,
+    userId,
     wishlistsByUser,
     comments,
     wishlist,

@@ -85,8 +85,8 @@ h1 {
 }
 
 .bottom-bar {
-  position:fixed;
-  bottom: 0px;
+  position:absolute;
+  margin-bottom: 0px;
   display: flex;
   width: 100%;
   padding: 40px 15px;
