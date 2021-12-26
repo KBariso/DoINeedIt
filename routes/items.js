@@ -202,6 +202,7 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, ite
       categoryId,
       wishListId,
       errors,
+      purchased,
       csrfToken: req.csrfToken()
     })
   }
@@ -210,8 +211,8 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, ite
 
 /* DELETE an item */
 router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/delete', csrfProtection, asyncHandler(async(req, res, next) => {
-  const wishListId = req.params.id;
-  const itemId = req.params.itemId
+  const wishListId =  parseInt(req.params.id, 10);
+  const itemId = parseInt(req.params.itemId, 10);
   const item = await db.Item.findByPk(itemId, {
     include: {
       all: true

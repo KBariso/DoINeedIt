@@ -1,23 +1,23 @@
 extends layout.pug
 
 block content
-    h1(class="form-title") Add item
-    form(action=`/wishlists/${wishListId}/items/new`, method="post" class="update-form")
-      input(type="hidden" name="_csrf" value=csrfToken)
-      label(for="name") Name
-      input(type="text", name="name" value=item.name)
-      label(for="categoryId") Category
-      select(name="categoryId" required=true)
-        option(selected="true" disabled="disabled") --Select a category--
-        each category in categories
-          option(value=category.id)= category.name
-      label(for="price") Price
-      input(type="number", name="price" value=item.price)
-      label(for="link") Link
-      input(type="url", name="link" value=item.link)
-      button(type="submit") Add Item
-    a(href=`/wishlists/${wishListId}`) Back to Wishlist
-    if errors
-      ul(class='error-list')
-        each error in errors
-          li= error
+  h1(class="update-title") Add item
+  form(action=`/wishlists/${wishListId}/items/new`, method="post" class="update-form")
+    input(type="hidden" name="_csrf" value=csrfToken)
+    label(for="name") Name
+    input(type="text", name="name" value=item.name)
+    label(for="categoryId") Category
+    select(name="categoryId" required=true)
+      option(selected="true" disabled="disabled") --Select a category--
+      each category in categories
+        option(value=category.id)= category.name
+    label(for="price") Price
+    input(type="number", name="price" value=item.price)
+    label(for="link") Link
+    input(type="url", name="link" value=item.link)
+    button(type="submit") Add Item
+  a(href=`/wishlists/${wishListId}` class='back-to-wishlist') Back to Wishlist
+  if errors
+    ul(class='error-list')
+      each error in errors
+        li= error

@@ -145,6 +145,10 @@ body {
     margin: 5px;
 }
 
+.wishlist-button > a:hover {
+    background-color: #c04808;
+  }
+
 .wishlist-summary {
     background-color: rgba(255, 255, 255, 0.25);
     border-radius: 10px;
@@ -189,4 +193,12 @@ body {
 
 .item-details > ul > li {
     padding: 3px;
+}
+
+.item-link {
+    font-size: .8rem;
+}
+
+.item-link:hover {
+    opacity: 0.8;
 }

@@ -1,7 +1,8 @@
 extends layout.pug
 
 block content
-  form(action="/wishlists/new", method="post")
+  h1(class="update-title") Create Wishlist
+  form(action="/wishlists/new", method="post" class="update-form")
     input(type="hidden" name="_csrf" value=csrfToken)
     label(for="name") Name
     input(type="text", name="name" value=name)

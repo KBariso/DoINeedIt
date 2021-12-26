@@ -8,7 +8,7 @@ block content
         each wishlist in wishlistsByUser
           li= wishlist.name
     div.middle-section
-      form(method="post" action=`/wishlists/${wishlist.id}/edit`)
+      form(method="post" action=`/wishlists/${wishlist.id}/edit` class="update-form")
         input(type="hidden" name="_csrf" value=csrfToken)
         input(type='text' name='name' value=wishlist.name)
         h3 By #{wishlist.User.username}

@@ -16,7 +16,7 @@ block wishlistContent
         li <strong>Category:</strong> #{item.Category.name}
         if (item.link)
           li
-            a(href=`${item.link}`) #{item.link}
+            a(href=`${item.link}` class="item-link") #{item.link}
         if (item.purchased)
-          li <strong>Purchased</strong>
+          li <strong>Purchased: </strong>
             i(class="fas fa-check-square")
