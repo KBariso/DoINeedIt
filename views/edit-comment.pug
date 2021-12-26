@@ -18,7 +18,7 @@ block content
         h3 By #{wishlist.User.username}
         if (wishlist.description)
           p #{wishlist.description}
-        if (authorized)
+        if userId == `${wishlist.userId}`
           div.wishlist-button
             a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
             a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
@@ -38,7 +38,7 @@ block content
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
                 div.item-button
                   span $#{item.price}
-                  if (authorized)
+                  if userId == `${wishlist.userId}`
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
                       i(class="far fa-edit")
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)

@@ -14,7 +14,8 @@ body {
 }
 .left-nav-bar {
     display: block;
-    width: 200px;
+    width: 220px;
+    min-width: 200px;
     padding: 20px;
 }
 

@@ -220,15 +220,18 @@ router.get('/search', asyncHandler(async(req, res) => {
 
   let { term } = req.query;
 
+  term = term.toLowerCase();
+
   const wishlistSearch = await db.Wishlist.findAll({
     include: {
       all: true,
     },
     where: {
       name: {
-        [Op.like]: `%${term}%`
+        [Op.iLike]: `%${term}%`
       }
-    }
+    },
+    // order: [['userId', 'DESC']]
   })
   res.render("search", {
     title: `Search Result for ${term}`,
