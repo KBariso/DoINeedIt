@@ -202,3 +202,12 @@ body {
 .item-link:hover {
     opacity: 0.8;
 }
+
+.purchase-icons > i {
+    margin: 0px 5px 0px 2px;
+}
+
+.purchase-icons > .far:hover {
+    background-color: white;
+    color: black
+}

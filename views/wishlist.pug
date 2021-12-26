@@ -28,8 +28,13 @@ block content
             each item in items
               div.item-name
                 div
-                  if (authorized)
-                    input(type="checkbox", name="purchased" value="true")
+                  //- if (authorized)
+                  //-   input(type="checkbox", name="purchased" value="true")
+                  span.purchase-icons
+                    if (item.purchased)
+                      i(class="fas fa-check-square")
+                    else
+                      i(class="far fa-square")
                   span
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
                 div.item-button

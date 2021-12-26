@@ -16,14 +16,13 @@ block content
     label(for="link") Link
     input(type="url", name="link" value=item.link)
     label(for="purchased") Purchase complete
-    if (item.purchased)
-      span.purchased
+    span.purchased
+      if (item.purchased)
         input(type="radio", name="purchased" value="true" id="purchased" checked)
         label(for="purchased") Yes
         input(type="radio", name="purchased" value="false" id="notPurchased")
         label(for="notPurchased") No
-    else
-      span.purchased
+      else
         input(type="radio", name="purchased" value="true" id="purchased")
         label(for="purchased") Yes
         input(type="radio", name="purchased" value="false" id="notPurchased" checked)

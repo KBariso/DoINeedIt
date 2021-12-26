@@ -50,7 +50,11 @@ const commentValidators = [
 
 /* Create a POST /comments/new Route */
 router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidators, asyncHandler(async(req, res) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    const wishlist = await db.Wishlist.findByPk(req.params.id, {
+        include: {
+          all: true
+        }
+      });
     const comments = await db.Comment.findAll({
         where: {
             wishListId: wishlist.id
@@ -65,6 +69,12 @@ router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidato
         userId,
         wishListId: wishlist.id,
         createdAt
+    });
+
+    const wishlistsByUser = await db.Wishlist.findAll({
+        where: {
+          userId: req.session.auth.userId,
+        },
     });
 
     const validatorErrors = validationResult(req);
@@ -84,7 +94,6 @@ router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidato
             authorized,
             errors,
             content,
-            totalPrice,
             csrfToken: req.csrfToken(),
         });
     };

@@ -26,11 +26,23 @@ block content
           if (items)
             each item in items
               div.item-name
-                //- if (authorized)
-                //-   input(type="checkbox", name="purchased" value="true")
-                span
-                  a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
-                span $#{item.price}
+                div
+                  //- if (authorized)
+                  //-   input(type="checkbox", name="purchased" value="true")
+                  span.purchase-icons
+                    if (item.purchased)
+                      i(class="fas fa-check-square")
+                    else
+                      i(class="far fa-square")
+                  span
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
+                div.item-button
+                  span $#{item.price}
+                  if (authorized)
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
+                      i(class="far fa-edit")
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
+                      i(class="far fa-trash-alt")
         //- p Total cost: $#{totalPrice}
         //- h3 Comments
         form(action=`/wishlists/${wishlist.id}/comments/new`, method="post" class="post-comment")

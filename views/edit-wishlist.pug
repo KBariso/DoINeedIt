@@ -17,8 +17,10 @@ block content
       h1(class="update-title") Edit Wishlist
       form(method="post" action=`/wishlists/${wishlist.id}/edit` class="update-form")
         input(type="hidden" name="_csrf" value=csrfToken)
+        label(for="name") Name
         input(type='text' name='name' value=wishlist.name)
         h3 By #{wishlist.User.username}
+        label(for="description") Description
         textarea(name='description') #{wishlist.description}
         label(for='isPublic') Privacy Settings
         if wishlist.isPublic
@@ -39,8 +41,20 @@ block content
           if (items)
             each item in items
               div.item-name
-                //- if (authorized)
-                //-   input(type="checkbox", name="purchased" value="true")
-                span
-                  a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
-                span $#{item.price}
+                div
+                  //- if (authorized)
+                  //-   input(type="checkbox", name="purchased" value="true")
+                  span.purchase-icons
+                    if (item.purchased)
+                      i(class="fas fa-check-square")
+                    else
+                      i(class="far fa-square")
+                  span
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
+                div.item-button
+                  span $#{item.price}
+                  if (authorized)
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
+                      i(class="far fa-edit")
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
+                      i(class="far fa-trash-alt")

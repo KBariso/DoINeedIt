@@ -147,6 +147,7 @@ router.get(
         title: "Edit Wishlist",
         wishlistsByUser,
         wishlist,
+        authorized,
         items: wishlist.Items,
         csrfToken: req.csrfToken(),
       });

@@ -19,7 +19,7 @@ router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
 
 /* GET items by Id page */
 
-router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, res) => {
+router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
   const wishlistId = parseInt(req.params.id, 10)
   const item = await db.Item.findByPk(itemId,  {
@@ -71,7 +71,8 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, 
     wishlistsByUser,
     comments,
     wishlist,
-    wishlistId
+    wishlistId,
+    csrfToken: req.csrfToken()
   })
 
 }))
@@ -202,7 +203,6 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, ite
       categoryId,
       wishListId,
       errors,
-      purchased,
       csrfToken: req.csrfToken()
     })
   }
