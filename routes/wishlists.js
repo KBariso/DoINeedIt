@@ -173,9 +173,24 @@ router.post(
 );
 
 router.get("/:id/delete", asyncHandler(async(req, res, next) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    const wishlist = await db.Wishlist.findByPk(req.params.id, {
+      include: {
+        all: true
+      }
+    });
+
+    const items = await db.Item.findAll({
+      where: { wishListId: wishlist.id }
+    })
+
+    const comments = await db.Comment.findAll({
+      where: { wishListId: wishlist.id }
+    })
+
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
     if(authorized) {
+      await items.forEach(item => item.destroy())
+      await comments.forEach(comment => comment.destroy())
       await wishlist.destroy();
       res.redirect('/')
     } else {
