@@ -4,6 +4,8 @@ const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("../utils");
 const { requireAuth, isAuthorized } = require("../auth");
 const { check, validationResult } = require("express-validator");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const router = express.Router();
 
@@ -202,7 +204,38 @@ router.get("/:id/delete", asyncHandler(async(req, res, next) => {
 }));
 
 
+/* GET - Search wishlist by name */
+router.get('/search', asyncHandler(async(req, res) => {
 
-/* POST Comments on Wishlists by Id. */
+  const wishlistsByUser = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      userId: req.session.auth.userId,
+    },
+  });
+
+  const userId = req.session.auth.userId
+
+  let { term } = req.query;
+
+  const wishlistSearch = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      name: {
+        [Op.like]: `%${term}%`
+      }
+    }
+  })
+  res.render("search", {
+    title: `Search Result for ${term}`,
+    wishlistSearch,
+    wishlistsByUser,
+    userId
+  })
+}))
 
 module.exports = router;

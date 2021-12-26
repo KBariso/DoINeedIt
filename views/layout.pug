@@ -12,6 +12,11 @@ html
       div(class='nav-left')
         a(href='/')
           img(src='/images/Shrug-Emoji-white.png' width='100px')
+        if authenticated
+          form(action="/wishlists/search")
+            i(class="fas fa-search")
+            input(type="search", name="term" placeholder="Search for Wishlist")
+            input(type="submit" value="Search")
       div(class='nav-right')
         if authenticated
           p(class='welcome') Welcome, #{user.fullName}!
