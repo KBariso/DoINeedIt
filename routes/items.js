@@ -19,9 +19,10 @@ router.get('/wishlists/:id(\\d+)/items', asyncHandler(async (req, res) => {
 
 /* GET items by Id page */
 
-router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, res) => {
+router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const itemId = parseInt(req.params.itemId, 10)
   const wishlistId = parseInt(req.params.id, 10)
+  let userId = req.session.auth.userId
   const item = await db.Item.findByPk(itemId,  {
     include: {
       all: true
@@ -48,8 +49,9 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, 
         wishListId: wishlist.id
     },
     include: {
-        all: true
+        all: true,
     },
+    order: [['updatedAt', 'DESC']]
   })
 
   let items = await db.Item.findAll({
@@ -68,10 +70,12 @@ router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)', asyncHandler(async (req, 
     item,
     items,
     authorized,
+    userId,
     wishlistsByUser,
     comments,
     wishlist,
-    wishlistId
+    wishlistId,
+    csrfToken: req.csrfToken()
   })
 
 }))
@@ -210,8 +214,8 @@ router.post('/wishlists/:id(\\d+)/items/:itemId(\\d+)/edit', csrfProtection, ite
 
 /* DELETE an item */
 router.get('/wishlists/:id(\\d+)/items/:itemId(\\d+)/delete', csrfProtection, asyncHandler(async(req, res, next) => {
-  const wishListId = req.params.id;
-  const itemId = req.params.itemId
+  const wishListId =  parseInt(req.params.id, 10);
+  const itemId = parseInt(req.params.itemId, 10);
   const item = await db.Item.findByPk(itemId, {
     include: {
       all: true

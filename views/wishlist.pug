@@ -28,8 +28,13 @@ block content
             each item in items
               div.item-name
                 div
-                  if (authorized)
-                    input(type="checkbox", name="purchased" value="true")
+                  //- if (authorized)
+                  //-   input(type="checkbox", name="purchased" value="true")
+                  span.purchase-icons
+                    if (item.purchased)
+                      i(class="fas fa-check-square")
+                    else
+                      i(class="far fa-square")
                   span
                     a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
                 div.item-button
@@ -60,7 +65,9 @@ block content
                         i(class="far fa-trash-alt")
                 p #{comment.content}
                 p.comment-date #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
-    div.wishlist-summary
-      p.total-cost Total cost: $#{totalPrice}
+    if(totalPrice)
+      div.wishlist-summary
+        p.total-cost Total cost: $#{totalPrice}
+        p.total-items Total items: #{items.length}
 
     block wishlistContent

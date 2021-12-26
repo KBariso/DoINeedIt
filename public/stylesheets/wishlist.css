@@ -14,7 +14,8 @@ body {
 }
 .left-nav-bar {
     display: block;
-    width: 200px;
+    width: 220px;
+    min-width: 200px;
     padding: 20px;
 }
 
@@ -80,6 +81,11 @@ body {
     padding: 10px;
 }
 
+.wishlist-info p {
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
 .comment-box {
     padding: 3px;
     border-radius: 3px;
@@ -90,7 +96,6 @@ body {
 .comment-box:hover {
     border: 1px solid gray;
 }
-
 
 
 .post-comment {
@@ -133,6 +138,7 @@ body {
 
 .wishlist-button {
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .wishlist-button > a {
@@ -144,6 +150,10 @@ body {
     font-size: 14px;
     margin: 5px;
 }
+
+.wishlist-button > a:hover {
+    background-color: #c04808;
+  }
 
 .wishlist-summary {
     background-color: rgba(255, 255, 255, 0.25);
@@ -157,4 +167,58 @@ body {
     background-color: rgba(255, 255, 255, 1);
     border-radius: 10px;
     padding: 10px;
+}
+
+.items-container {
+    background-color: rgba(255, 255, 255, 0.897);
+    box-shadow: -2px 0 0 #d9d9d9;
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 10px;
+    min-width: 400px;
+    width: 35%;
+    overflow: hidden;
+}
+
+.items-firstline {
+    padding: 15px 0;
+}
+.item-header {
+    font-size: 19px;
+    font-weight: 550;
+    padding: 10px;
+    color: #0077B8;
+}
+
+.item-details > ul {
+    list-style-type: none;
+    padding: 10px;
+    color: rgb(87, 86, 86);
+    font-size: 1rem
+}
+
+.item-details > ul > li {
+    padding: 3px;
+}
+
+.item-link {
+    font-size: .8rem;
+}
+
+.item-link:hover {
+    opacity: 0.8;
+}
+
+.purchase-icons > i {
+    margin: 0px 5px 0px 2px;
+}
+
+.purchase-icons > .far:hover {
+    background-color: white;
+    color: black
+}
+
+.user-name {
+    font-size: .8rem;
+    color: rgb(87, 86, 86);
 }

@@ -4,6 +4,8 @@ const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("../utils");
 const { requireAuth, isAuthorized } = require("../auth");
 const { check, validationResult } = require("express-validator");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const router = express.Router();
 
@@ -147,6 +149,7 @@ router.get(
         title: "Edit Wishlist",
         wishlistsByUser,
         wishlist,
+        authorized,
         items: wishlist.Items,
         csrfToken: req.csrfToken(),
       });
@@ -173,9 +176,24 @@ router.post(
 );
 
 router.get("/:id/delete", asyncHandler(async(req, res, next) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    const wishlist = await db.Wishlist.findByPk(req.params.id, {
+      include: {
+        all: true
+      }
+    });
+
+    const items = await db.Item.findAll({
+      where: { wishListId: wishlist.id }
+    })
+
+    const comments = await db.Comment.findAll({
+      where: { wishListId: wishlist.id }
+    })
+
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
     if(authorized) {
+      await items.forEach(item => item.destroy())
+      await comments.forEach(comment => comment.destroy())
       await wishlist.destroy();
       res.redirect('/')
     } else {
@@ -186,7 +204,41 @@ router.get("/:id/delete", asyncHandler(async(req, res, next) => {
 }));
 
 
+/* GET - Search wishlist by name */
+router.get('/search', asyncHandler(async(req, res) => {
 
-/* POST Comments on Wishlists by Id. */
+  const wishlistsByUser = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      userId: req.session.auth.userId,
+    },
+  });
+
+  const userId = req.session.auth.userId
+
+  let { term } = req.query;
+
+  term = term.toLowerCase();
+
+  const wishlistSearch = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      name: {
+        [Op.iLike]: `%${term}%`
+      }
+    },
+    // order: [['userId', 'DESC']]
+  })
+  res.render("search", {
+    title: `Search Result for ${term}`,
+    wishlistSearch,
+    wishlistsByUser,
+    userId
+  })
+}))
 
 module.exports = router;

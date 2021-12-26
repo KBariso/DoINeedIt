@@ -34,7 +34,7 @@ h1 {
   background-color: #0077B8;
   color: rgb(241, 241, 241);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 15px 10px;
 }
@@ -48,6 +48,18 @@ h1 {
 
 .nav-right > * {
   margin: 0 5px;
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  justify-content: flex-start;
+}
+
+.nav-left > * {
+  margin-left: 20px
 }
 
 #home {
@@ -85,8 +97,8 @@ h1 {
 }
 
 .bottom-bar {
-  position:fixed;
-  bottom: 0px;
+  position:absolute;
+  margin-bottom: 0px;
   display: flex;
   width: 100%;
   padding: 40px 15px;
@@ -155,4 +167,63 @@ h1 {
   flex-direction: row;
   justify-content: space-evenly;
   width: 65%;
+}
+
+.search-bar input {
+  height: 25px;
+  font-size: 0.8rem;
+  padding: 3px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.2);
+  width: 250px;
+  margin-left: 5px;
+  background-color: rgba(255,255,255,0.2);
+}
+
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+.search-bar input:focus {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.search-bar input:hover {
+  box-shadow: 1px 1px 1px rgba(255,255,255,0.4);
+}
+
+.fa-search {
+  margin-left: 40px;
+}
+
+.search-button {
+  font-size: 0.8rem;
+  width: fit-content;
+  height: 25px;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid white;
+  background-color: rgba(255, 255, 255, 0.925);
+  margin-left: 5px;
+  color: #006094;
+  font-weight: bold;
+}
+
+.search-button:hover {
+  color: #013450;
+  box-shadow: 1.5px 1.5px 1.5px rgba(255,255,255,0.4);
+}
+
+.user-question {
+  text-align: center;
+}
+
+.user-question a {
+  margin-left: 5px;
+  color: #0095f6;
+}
+
+.user-question a:hover {
+   font-weight: 600;
 }

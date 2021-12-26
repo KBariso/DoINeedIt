@@ -12,6 +12,12 @@ html
       div(class='nav-left')
         a(href='/')
           img(src='/images/Shrug-Emoji-white.png' width='100px')
+        if authenticated
+          div.search-bar
+            form(action="/wishlists/search")
+              i(class="fas fa-search")
+              input(type="search", name="term" placeholder="Search for Wishlist")
+              button(type="submit" class="search-button") Search
       div(class='nav-right')
         if authenticated
           p(class='welcome') Welcome, #{user.fullName}!
@@ -20,6 +26,9 @@ html
         else
           a(href='/users/login' class='nav-button') Log In
           a(href='/users/signup' class='nav-button sign-up') Sign Up for FREE
+    block content
+
+    footer
       div(class='bottom-bar')
         div(class='suhayl-profile')
           p Suhayl Khan
@@ -49,7 +58,3 @@ html
               i(class="fa fa-github" aria-hidden="true")
             a(href='https://www.linkedin.com/in/kielvin-bariso/')
               i(class="fab fa-linkedin-in")
-
-
-
-    block content
