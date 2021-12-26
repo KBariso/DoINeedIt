@@ -10,6 +10,9 @@ block content
     label(for="password") Password
     input(type="password", name="password" required)
     button(type="submit") Log In
+  div.user-question
+    p Don't have an account?
+      a(href='/users/signup') Sign up
   if errors
     ul(class='error-list')
       each error in errors

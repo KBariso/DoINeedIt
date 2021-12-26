@@ -19,6 +19,9 @@ block content
         label(for="confirmPassword") Confirm Password
         input(type="password", name="confirmPassword" required)
         button(type="submit") Sign Up
+    div.user-question
+        p Already have an account?
+            a(href='/users/login') Log In
     if errors
         ul(class='error-list')
             each error in errors

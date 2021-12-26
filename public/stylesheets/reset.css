@@ -170,7 +170,8 @@ h1 {
 }
 
 .search-bar input {
-  height: 30px;
+  height: 25px;
+  font-size: 0.8rem;
   padding: 3px;
   border-radius: 3px;
   border: 1px solid rgba(255,255,255,0.2);
@@ -197,8 +198,9 @@ h1 {
 }
 
 .search-button {
+  font-size: 0.8rem;
   width: fit-content;
-  height: 30px;
+  height: 25px;
   padding: 3px 7px;
   border-radius: 3px;
   border: 1px solid white;
@@ -211,4 +213,17 @@ h1 {
 .search-button:hover {
   color: #013450;
   box-shadow: 1.5px 1.5px 1.5px rgba(255,255,255,0.4);
+}
+
+.user-question {
+  text-align: center;
+}
+
+.user-question a {
+  margin-left: 5px;
+  color: #0095f6;
+}
+
+.user-question a:hover {
+   font-weight: 600;
 }

@@ -81,6 +81,11 @@ body {
     padding: 10px;
 }
 
+.wishlist-info p {
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
 .comment-box {
     padding: 3px;
     border-radius: 3px;
