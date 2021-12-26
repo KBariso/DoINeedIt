@@ -1,6 +1,9 @@
 extends layout
 
+append head
+  link(rel="stylesheet" href="/stylesheets/error.css")
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  div.not-found
+    h1.error-text 404
+    h2.error-text Page Not Found
+    img(src="/images/shrug-clear.png" width='35%')

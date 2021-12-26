@@ -54,6 +54,7 @@ router.get(
             let price2 = parseFloat(ele, 10);
             return price1 += price2;
         })
+        totalPrice = Math.round(totalPrice * 100) / 100;
     }
 
     res.render("wishlist", {
