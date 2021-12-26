@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-  script(src="../public/javascripts/index.js")
+  //- script(src="../public/javascripts/index.js")
   link(rel="stylesheet", href='/stylesheets/wishlist.css')
   div.content-container
     div.left-nav-bar
@@ -27,4 +27,4 @@ block content
                   a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
                   a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
       else
-        h1.update-title No results found 
+        h1.update-title No results found

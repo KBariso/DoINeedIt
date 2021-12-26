@@ -10,7 +10,10 @@ block content
     select(name="categoryId" required=true)
       option(selected="true" disabled="disabled") --Select a category--
       each category in categories
-        option(value=category.id)= category.name
+        if (item.categoryId == category.id)
+          option(selected value=category.id)= category.name
+        else
+          option(value=category.id)= category.name
     label(for="price") Price
     input(type="number", name="price" value=item.price)
     label(for="link") Link

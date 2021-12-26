@@ -15,12 +15,13 @@ router.use(requireAuth);
 
 router.get(
   "/:id(\\d+)", csrfProtection,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const wishlist = await db.Wishlist.findByPk(req.params.id, {
       include: {
         all: true,
       },
     });
+
 
     const wishlistsByUser = await db.Wishlist.findAll({
       where: {
@@ -30,13 +31,19 @@ router.get(
 
     const comments = await db.Comment.findAll({
       where: {
-          wishListId: wishlist.id
+        wishListId: wishlist.id
       },
       include: { model: db.User },
       order: [['updatedAt', 'DESC']]
-  })
+    })
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
+
+    if (!wishlist.isPublic && !authorized) {
+      const error = new Error();
+      error.status = 404;
+       return next(error);
+    }
 
     const items = await db.Item.findAll({
         where: { wishListId: wishlist.id }
