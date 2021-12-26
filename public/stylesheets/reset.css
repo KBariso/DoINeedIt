@@ -1,4 +1,5 @@
 html {
+  position: relative;
   background-color: #e4eef8;
 }
 
@@ -97,8 +98,8 @@ h1 {
 }
 
 .bottom-bar {
-  position:absolute;
-  margin-bottom: 0px;
+  position: relative;
+  bottom: 0px;
   display: flex;
   width: 100%;
   padding: 40px 15px;
