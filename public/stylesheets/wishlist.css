@@ -92,7 +92,6 @@ body {
 }
 
 
-
 .post-comment {
     display: flex;
     margin-top: 5px;
@@ -133,6 +132,7 @@ body {
 
 .wishlist-button {
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .wishlist-button > a {

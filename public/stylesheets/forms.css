@@ -145,3 +145,46 @@
 .back-to-wishlist:hover {
   background-color: #c04808;
 }
+
+
+.middle-section > .update-title {
+  margin: 5px;
+}
+
+.middle-section > .update-form {
+  width: auto;
+  border: none;
+}
+
+.middle-section > .update-form > input {
+  font-size: 1.2rem;
+}
+
+.public > label {
+  margin: 5px 15px 5px 2px;
+}
+
+.update-form > textarea {
+  height: 70px;
+  padding: 3px;
+  margin-top: 15px;
+  border-radius: 3px;
+  border: 1px solid #d8d8d8;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.delete-wishlist {
+  text-decoration: none;
+  background-color: rgb(211, 15, 15);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  margin: 10px 0;
+  width: fit-content;
+}
+
+.delete-wishlist:hover {
+  background-color: rgb(160, 20, 20);
+}

@@ -125,6 +125,7 @@ router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, r
             wishlistsByUser,
             wishlist,
             items: wishlist.Items,
+            authorized,
             csrfToken: req.csrfToken(),
         })
     } else {
