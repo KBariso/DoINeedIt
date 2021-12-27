@@ -2,6 +2,33 @@
 
 *[Do I Need It?](https://do-i-need-it.herokuapp.com/), a [Remember The Milk](https://www.rememberthemilk.com/) clone, is an application that allows users to create wishlists to compile a list of products that they want/"need".*
 
+Do I Need It? allows users to:
+
+- Create an account
+- Create, edit, and delete wishlists
+- Add, edit, and delete items in wishlists
+- Comment on public wishlists
+- Search public wishlists
+
+---
+
+## Languages
+
+Do I Need It? uses:
+- JavaScript
+- CSS
+- Pug
+
+## Libraries
+
+Do I Need It? uses:
+- BCryptJS
+- CSurf
+- Express
+- Express-Session
+- Express-Validator
+- Sequelize
+
 ---
 
 ## [Feature List](https://github.com/KBariso/DoINeedIt/wiki/Feature-List)
@@ -153,12 +180,146 @@ Searching Wishlists
 
 *Schema used for the Do I Need It? database.*
 
-![Database Schema]()
+![Database Schema](/wiki_images/Screen%20Shot%202021-12-07%20at%206.56.33%20PM.png)
+
+### Users
+| Column Name    | Datatype      | Constraints      |
+|----------------|---------------|------------------|
+| id             | INTEGER       | PK, NOT NULL     |
+| fullName       | STRING(100)   | NOT NULL         |
+| email          | STRING(255)   | NOT NULL, UNIQUE |
+| username       | STRING(50)    | NOT NULL, UNIQUE |
+| hashedPassword | STRING.BINARY | NOT NULL         |
+
+### Wishlists
+| Column Name | Datatype    | Constraints  |
+|-------------|-------------|--------------|
+| id          | INTEGER     | PK, NOT NULL |
+| name        | STRING(100) | NOT NULL     |
+| isPublic    | BOOLEAN     | NOT NULL     |
+| userId      | INTEGER     | NOT NULL, FK |
+| description | TEXT        |              |
+
+- `userId` references `Users` table
+- `isPublic` has default of `false`
+
+### Comments
+| Column Name | Datatype  | Constraints  |
+|-------------|-----------|--------------|
+| id          | INTEGER   | PK, NOT NULL |
+| content     | TEXT      | NOT NULL     |
+| createdAt   | TIMESTAMP | NOT NULL     |
+| userId      | INTEGER   | NOT NULL, FK |
+| wishListId  | INTEGER   | NOT NULL, FK |
+
+- `userId` references `Users` table
+- `wishListId` references `WishLists` table
+
+### Categories
+| Column Name | Datatype    | Constraints  |
+|-------------|-------------|--------------|
+| id          | INTEGER     | PK, NOT NULL |
+| name        | STRING(100) | NOT NULL     |
+
+### Items
+| Column Name | Datatype      | Constraints  |
+|-------------|---------------|--------------|
+| id          | INTEGER       | PK, NOT NULL |
+| name        | STRING(50)    | NOT NULL     |
+| price       | NUMERIC(10,2) | NOT NULL     |
+| link        | TEXT          |              |
+| purchased   | BOOLEAN       | NOT NULL     |
+| categoryId  | INTEGER       | NOT NULL, FK |
+| wishListId  | INTEGER       | NOT NULL, FK |
+
+- `purchased` has default of `false`
+- `categoryId` references `Categories` table
+- `wishListId` references `WishLists` table
+
+### Favorites
+| Column Name | Datatype | Constraints  |
+|-------------|----------|--------------|
+| id          | INTEGER  | PK, NOT NULL |
+| itemId      | INTEGER  | NOT NULL, FK |
+| userId      | INTEGER  | NOT NULL, FK |
+
+- `itemId` references `Items` table
+- `userId` references `Users` table
+
+---
 
 ## [API Documentation](https://github.com/KBariso/DoINeedIt/wiki/API-Documentation)
 
-API routes used by the frontend for accessing the database
+*API routes used by the frontend for accessing the database*
+
+### Wishlists
+For logged in users, this page displays all public Wishlists.
+A logged in user would be able to edit or delete one of their own Wishlists without causing a refresh/redirect.
+
+- `GET /wishlists`
+- `GET /wishlists/:id`
+- `POST /wishlists/:id/comments`
+- `POST /wishlists/:id`
+- `DELETE /wishlists/:id`
+
+### Comments
+A logged in user may delete one of their own Wishlist comments, removing it from the list of visible Wishlist comments without causing a refresh/redirect.
+
+- `DELETE /comments/:id`
+
+### Items
+For logged in users, this page displays a specific item and its contents.
+A logged in user would be able to edit or delete an item without causing a refresh/redirect.
+
+- `GET /items/:id`
+- `POST /items/:id`
+- `DELETE /items/:id`
+
+---
 
 ## [Frontend Routes](https://github.com/KBariso/DoINeedIt/wiki/Frontend-Routes)
 
 Routes that return an HTML page that the user can interact with
+
+### `/`
+For logged out/new users, this page displays demo Wishlists, as well as a navigation bar with login/signup buttons.
+For logged in users, this page redirects to /users/:id/wishlist.
+
+- `GET /`
+
+### `/login`
+
+Log in page
+
+*This page displays a log in form*
+
+- `GET /login`
+- `POST /login`
+
+### `/signup`
+Sign up page
+
+*This page displays a sign up form.*
+
+- `GET /signup`
+- `POST /signup`
+
+### `/wishlists`
+For logged in users, this page displays the most recent public Wishlists, as well as a navigation bar with a logout button.
+
+- `GET /wishlists`
+
+### `/wishlists/:id`
+For logged in users, this page displays a specific Wishlist and its contents, as well as a navigation bar with a logout button. Logged in users can post comments. If the Wishlist belongs to the user, this page will also display edit and delete buttons.
+
+- `GET /wishlists/:id`
+- `GET /wishlists/:id/edit`
+- `POST /wishlists/:id/comments`
+- `POST /wishlists/:id`
+
+### `/items/:id`
+For logged in users, this page displays a specific item and its contents, as well as a navigation bar with a logout button. If the item belongs to the user, this page will also display an edit button which will allow the user to edit the item and a delete button to allow the user to delete the item.
+
+- `GET /items/:id/edit`
+- `POST /items/:id`
+- `DELETE /items/:id`
