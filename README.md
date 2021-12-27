@@ -78,6 +78,8 @@ Sign Up
     - I would like the website to inform me of the validations I failed to pass, and repopulate the form with my valid entries (except my password).
       - So that I can try again without needing to refill forms I entered valid data into.
 
+![Sign Up](wiki_images/signup.png)
+
 Log in
 - As a registered and unauthorized user, I want to be able to log in to the website via a log-in form.
   - When I'm on the `/login` page:
@@ -88,6 +90,8 @@ Log in
   - When I enter invalid data on the log-in form:
     - I would like the website to inform me of the validations I failed to pass, and repopulate the form with my valid entries (except my password).
       - So that I can try again without needing to refill forms I entered valid data into.
+
+![Log In](wiki_images/login.png)
 
 Log Out
 - As a logged in user, I want to log out via an easy to find log out button on the navigation bar.
@@ -103,6 +107,8 @@ Create Wishlist
     - I can add a name, description, and choose a privacy setting (public/private) for a new wishlist.
       - So that I can remember and/or share the things I need/want.
 
+![Create Wishlist](wiki_images/create-wishlist.png)
+
 Viewing Wishlists
 - As a logged in user, I want to be able to view a selection of public Wishlists.
   - When I'm on the `/wishlists` page:
@@ -113,6 +119,8 @@ Viewing Wishlists
   - When I'm on the `/wishlists/:id` page:
     - I can view the content of the specific Wishlist, as well as the associated items, comments, and Wishlist Summary(item count and total price of list).
       - So that I can read and interact with the wants and needs of other users and add my own comments.
+
+![Viewing Wishlists](wiki_images/wishlist.png)
 
 Updating Wishlists
 - As a logged in user, I want to be able to edit my Wishlist by clicking an "Edit" button associated with the Wishlist anywhere that Wishlist appears.
@@ -126,6 +134,8 @@ Deleting Wishlists
     - I can click "Delete" to permanently delete a Wishlist I have posted.
       - So that when I no longer need or want a Wishlist, I can delete it.
 
+![Updating Wishlists](wiki_images/edit-wishlist.png)
+
 ### Items
 
 Adding Items
@@ -134,11 +144,15 @@ Adding Items
     - I can add a name, price, category, and link for an item.
       - So that I can keep track of items I need/want.
 
+![Adding Items](wiki_images/add-item.png)
+
 Updating Items
 - As a logged in user, I want to be able to edit items on my Wishlists by clicking an "Edit Item" button associated with the Item.
   - When I'm on the `/items/:id/edit` page:
     - I can edit the name, price, category, purchased status, and link for an item.
       - So that I can update items I have added to my Wishlists.
+
+![Updating Items](wiki_images/edit-item.png)
 
 Deleting Items
 - As a logged in user, I want to be able to delete items on my Wishlists by clicking a "Delete Item" button associated with the Item.
@@ -160,6 +174,8 @@ Updating Comments
     - I can edit the text for a comment.
       - So that I can update comments I have posted.
 
+![Updating Comments](wiki_images/edit-comment.png)
+
 Deleting Comments
 - As a logged in user, I want to be able to delete my comments on public Wishlists by clicking a "Delete Comment" button associated with the comment.
   - When I'm on the `/wishlists/:id` page:
@@ -173,6 +189,8 @@ Searching Wishlists
   - When I'm on any page as a logged in user:
     - I can click the "Search" button to obtain a list of public Wishlists that match the search input.
       - So that I can browse Wishlists posted by other users.
+
+![Search](wiki_images/search.png)
 
 ---
 
@@ -323,3 +341,15 @@ For logged in users, this page displays a specific item and its contents, as wel
 - `GET /items/:id/edit`
 - `POST /items/:id`
 - `DELETE /items/:id`
+
+---
+
+## Future Features
+
+### Favorites
+
+*This feature will allow logged in users to add items from other users' wishlists to a specialized list containing items the user would like to add to their own wishlists.*
+
+### Tags
+
+*This feature will allow logged in users to add tags to their wishlists. Users will be able to search wishlists by tag.*
