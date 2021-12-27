@@ -53,7 +53,7 @@ router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidato
     const wishlist = await db.Wishlist.findByPk(req.params.id);
     const userId = req.session.auth.userId
     const { content, createdAt } = req.body;
-    console.log(userId)
+
     const comment = db.Comment.build({
         content,
         userId,
