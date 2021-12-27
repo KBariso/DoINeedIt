@@ -14,7 +14,7 @@ router.get('/', asyncHandler (async function(req, res, next) {
       where: {userId},
       order: [['updatedAt', 'DESC']]
     })
-    console.log(recentWishlist)
+
     res.redirect(`/wishlists/${recentWishlist.id}`);
   } else {
     res.render('index', { title: 'Do I Need It', authenticated: res.locals.authenticated });

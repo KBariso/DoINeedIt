@@ -174,7 +174,6 @@ router.post(
   "/:id/edit",
   csrfProtection,
   asyncHandler(async (req, res) => {
-    console.log(req.params.id)
     const wishlist = await db.Wishlist.findByPk(req.params.id);
     const { name, description, isPublic } = req.body;
     await wishlist.update( {name, description, isPublic} )
