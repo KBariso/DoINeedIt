@@ -1,0 +1,30 @@
+extends layout.pug
+
+block content
+  //- script(src="../public/javascripts/index.js")
+  link(rel="stylesheet", href='/stylesheets/wishlist.css')
+  div.content-container
+    div.left-nav-bar
+      span My Wishlists
+      span
+        a(href="/wishlists/new")
+          i(class="far fa-plus-square")
+      ul
+        each wishlist in wishlistsByUser
+          li.user-wishlists
+            a(href=`/wishlists/${wishlist.id}` class="anchor") #{wishlist.name}
+    div.middle-section
+      if (wishlistSearch.length)
+        h1.update-title Search Results
+        div.wishlist-info
+          each wishlist in wishlistSearch
+            if wishlist.isPublic
+              h1
+                a(href=`/wishlists/${wishlist.id}` class="anchor") #{wishlist.name}
+              h2.user-name By #{wishlist.User.username}
+              if userId == `${wishlist.userId}`
+                div.wishlist-button
+                  a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
+                  a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
+      else
+        h1.update-title No results found

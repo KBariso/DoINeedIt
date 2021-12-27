@@ -4,7 +4,7 @@ append head
   //- add page specific styles by appending to the head
   link(rel="stylesheet" href="/stylesheets/index.css")
   //- add page specific js
-  script(src="/javascripts/index.js" type="module" defer)
+  //- script(src="/javascripts/index.js" type="module" defer)
 
 block content
   h1(class="heading")= "Do I Need It?"
@@ -12,6 +12,36 @@ block content
 
   div(class="sign-up")
     a(href="/users/signup") Sign Up for FREE
-  div
-    i(class="fa-solid fa-couch")
-    i(class="fa-solid fa-chair")
+  div(class='main-picture')
+    img(src="/images/mainpic.png")
+
+  footer
+    div(class='bottom-bar')
+      div(class='suhayl-profile')
+        p Suhayl Khan
+        div(class='suhayl-links')
+          a(href='https://github.com/SuhaylKhan')
+            i(class="fa fa-github" aria-hidden="true")
+          a(href='https://www.linkedin.com/in/suhayl-khan-48601a193/')
+            i(class="fab fa-linkedin-in")
+      div(class='megan-profile')
+        p Megan McKenna
+        div(class='megan-links')
+          a(href='https://github.com/memckenna')
+            i(class="fa fa-github" aria-hidden="true")
+          a(href='https://www.linkedin.com/in/meganmckenna1/')
+            i(class="fab fa-linkedin-in")
+      div(class='sornam-profile')
+        p Sornam Vairavan
+        div(class='sornam-links')
+          a(href='https://github.com/sornamvairavan')
+            i(class="fa fa-github" aria-hidden="true")
+          a(href='https://www.linkedin.com/in/sornamvairavan/')
+            i(class="fab fa-linkedin-in")
+      div(class='kielvin-profile')
+        p Kielvin Bariso
+        div(class='sornam-links')
+          a(href='https://github.com/KBariso')
+            i(class="fa fa-github" aria-hidden="true")
+          a(href='https://www.linkedin.com/in/kielvin-bariso/')
+            i(class="fab fa-linkedin-in")

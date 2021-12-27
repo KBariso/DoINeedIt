@@ -4,6 +4,8 @@ const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("../utils");
 const { requireAuth, isAuthorized } = require("../auth");
 const { check, validationResult } = require("express-validator");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const router = express.Router();
 
@@ -12,13 +14,14 @@ router.use(requireAuth);
 /* GET Wishlists page by Id. */
 
 router.get(
-  "/:id(\\d+)",
-  asyncHandler(async (req, res) => {
+  "/:id(\\d+)", csrfProtection,
+  asyncHandler(async (req, res, next) => {
     const wishlist = await db.Wishlist.findByPk(req.params.id, {
       include: {
         all: true,
       },
     });
+
 
     const wishlistsByUser = await db.Wishlist.findAll({
       where: {
@@ -28,12 +31,19 @@ router.get(
 
     const comments = await db.Comment.findAll({
       where: {
-          wishListId: wishlist.id
+        wishListId: wishlist.id
       },
-      include: { model: db.User }
-  })
+      include: { model: db.User },
+      order: [['updatedAt', 'DESC']]
+    })
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
+
+    if (!wishlist.isPublic && !authorized) {
+      const error = new Error();
+      error.status = 404;
+       return next(error);
+    }
 
     const items = await db.Item.findAll({
         where: { wishListId: wishlist.id }
@@ -51,6 +61,7 @@ router.get(
             let price2 = parseFloat(ele, 10);
             return price1 += price2;
         })
+        totalPrice = Math.round(totalPrice * 100) / 100;
     }
 
     res.render("wishlist", {
@@ -59,8 +70,10 @@ router.get(
       wishlist,
       items: wishlist.Items,
       comments,
+      userId: req.session.auth.userId,
       authorized,
-      totalPrice
+      totalPrice,
+      csrfToken: req.csrfToken(),
     });
   })
 );
@@ -124,7 +137,7 @@ router.post(
 router.get(
   "/:id/edit",
   csrfProtection,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const wishlist = await db.Wishlist.findByPk(req.params.id, {
       include: {
         all: true,
@@ -139,13 +152,20 @@ router.get(
 
     const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
-    res.render("edit-wishlist", {
-      title: "Edit Wishlist",
-      wishlistsByUser,
-      wishlist,
-      items: wishlist.Items,
-      csrfToken: req.csrfToken(),
-    });
+    if(authorized) {
+      res.render("edit-wishlist", {
+        title: "Edit Wishlist",
+        wishlistsByUser,
+        wishlist,
+        authorized,
+        items: wishlist.Items,
+        csrfToken: req.csrfToken(),
+      });
+    } else {
+      const error = new Error()
+      error.status = 404
+      next(error)
+    }
   })
 );
 
@@ -162,14 +182,70 @@ router.post(
   })
 );
 
-router.get("/:id/delete", asyncHandler(async(req, res) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
-    await wishlist.destroy();
-    res.redirect('/')
+router.get("/:id/delete", asyncHandler(async(req, res, next) => {
+    const wishlist = await db.Wishlist.findByPk(req.params.id, {
+      include: {
+        all: true
+      }
+    });
+
+    const items = await db.Item.findAll({
+      where: { wishListId: wishlist.id }
+    })
+
+    const comments = await db.Comment.findAll({
+      where: { wishListId: wishlist.id }
+    })
+
+    const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
+    if(authorized) {
+      await items.forEach(item => item.destroy())
+      await comments.forEach(comment => comment.destroy())
+      await wishlist.destroy();
+      res.redirect('/')
+    } else {
+      const error = new Error()
+      error.status = 404
+      next(error)
+    }
+}));
+
+
+/* GET - Search wishlist by name */
+router.get('/search', asyncHandler(async(req, res) => {
+
+  const wishlistsByUser = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      userId: req.session.auth.userId,
+    },
+  });
+
+  const userId = req.session.auth.userId
+
+  let { term } = req.query;
+
+  term = term.toLowerCase();
+
+  const wishlistSearch = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      name: {
+        [Op.iLike]: `%${term}%`
+      }
+    },
+    // order: [['userId', 'DESC']]
+  })
+  res.render("search", {
+    title: `Search Result for ${term}`,
+    wishlistSearch,
+    wishlistsByUser,
+    userId
+  })
 }))
-
-
-
-/* POST Comments on Wishlists by Id. */
 
 module.exports = router;

@@ -1,6 +1,75 @@
 extends layout.pug
 
 block content
-    form(action=`/comments/edit/${comments.id}`, method="post")
-         input(type="hidden" name="_csrf" value=csrfToken)
-        
+  link(rel="stylesheet", href='/stylesheets/wishlist.css')
+  div.content-container
+    div.left-nav-bar
+      span My Wishlists
+      span
+        a(href="/wishlists/new")
+          i(class="far fa-plus-square")
+      ul
+        each wishlist in wishlistsByUser
+          li.user-wishlists
+            a(href=`/wishlists/${wishlist.id}`) #{wishlist.name}
+    div.middle-section
+      div.wishlist-info
+        h1 #{wishlist.name}
+        h3 By #{wishlist.User.username}
+        if (wishlist.description)
+          p #{wishlist.description}
+        if userId == `${wishlist.userId}`
+          div.wishlist-button
+            a(href=`/wishlists/${wishlist.id}/edit`) Edit Wishlist
+            a(href=`/wishlists/${wishlist.id}/items/new`) Add an item
+        div
+          if (items)
+            each item in items
+              div.item-name
+                div
+                  //- if (authorized)
+                  //-   input(type="checkbox", name="purchased" value="true")
+                  span.purchase-icons
+                    if (item.purchased)
+                      i(class="fas fa-check-square")
+                    else
+                      i(class="far fa-square")
+                  span
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
+                div.item-button
+                  span $#{item.price}
+                  if userId == `${wishlist.userId}`
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
+                      i(class="far fa-edit")
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
+                      i(class="far fa-trash-alt")
+        //- p Total cost: $#{totalPrice}
+        //- h3 Comments
+        form(action=`/wishlists/${wishlist.id}/comments/new`, method="post" class="post-comment")
+          input(type="hidden" name="_csrf" value=csrfToken)
+          input(type="text", name="content" class="comment-box" placeholder="Add a comment..." value=content)
+          button(type="submit" class="comment-button") Add Comment
+      div.comments-container
+        if comments
+          ul
+            if comment.id == `${editId}`
+              each comment in comments
+                  li.comment-border
+                    div
+                      span #{comment.User.username}
+                      if comment.id == `${editId}`
+                        //- span
+                        //-   a(href=`/comments/${comment.id}/delete`)
+                        //-   i(class="far fa-trash-alt")
+                      p.edit-content #{comment.content}
+                      if comment.id == `${editId}`
+                        form(action=`/comments/${comment.id}/edit`, method="post" class="post-comment")
+                            input(type="hidden" name="_csrf" value=csrfToken)
+                            input(type="text", name="content" class="comment-box" placeholder="Edit comment..." value=content)
+                            button(type="submit" class="comment-button") Save Changes
+                      span.comment-date.edit-content #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}
+                      //- else
+                      //-     li
+                      //-         p #{comment.User.username}
+                      //-         p #{comment.content}
+                      //-         p.comment-date #{comment.updatedAt.getMonth() + 1}/#{comment.updatedAt.getDate()}/#{comment.updatedAt.getFullYear()} #{comment.updatedAt.getHours()}:#{comment.updatedAt.getMinutes()}

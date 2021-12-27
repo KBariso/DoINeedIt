@@ -1,26 +1,40 @@
 extends layout.pug
 
 block content
-    form(action=`/wishlists/${wishListId}/items/${item.id}/edit`, method="post")
-      input(type="hidden" name="_csrf" value=csrfToken)
-      label(for="name") Name
-      input(type="text", name="name" value=item.name)
-      label(for="categoryId") Category
-      select(name="categoryId" selected=item.categoryId required=true)
-        option(selected="true" disabled="disabled") --Select a category--
-        each category in categories
+  h1(class="update-title") Edit item
+  form(action=`/wishlists/${wishListId}/items/${item.id}/edit`, method="post" class="update-form")
+    input(type="hidden" name="_csrf" value=csrfToken)
+    label(for="name") Name
+    input(type="text", name="name" value=item.name)
+    label(for="categoryId") Category
+    select(name="categoryId" required=true)
+      option(selected="true" disabled="disabled") --Select a category--
+      each category in categories
+        if (item.categoryId == category.id)
+          option(selected value=category.id)= category.name
+        else
           option(value=category.id)= category.name
-      label(for="price") Price
-      input(type="number", name="price" value=item.price)
-      label(for="link") Link
-      input(type="url", name="link" value=item.link)
-      label(for="purchased") Purchased
-      input(type="checkbox", name="purchased" value="purchased")
-      button(type="submit") Save changes
-      a(href=`/wishlists/${wishListId}/items/${item.id}`) Cancel
-    form(method='post' action=`/wishlists/${wishListId}/items/${item.id}/delete`)
-      button(type='submit') Delete item
-    if errors
-      ul(class='error-list')
-        each error in errors
-          li= error
+    label(for="price") Price
+    input(type="number", name="price" value=item.price)
+    label(for="link") Link
+    input(type="url", name="link" value=item.link)
+    label(for="purchased") Purchase complete
+    span.purchased
+      if (item.purchased)
+        input(type="radio", name="purchased" value="true" id="purchased" checked)
+        label(for="purchased") Yes
+        input(type="radio", name="purchased" value="false" id="notPurchased")
+        label(for="notPurchased") No
+      else
+        input(type="radio", name="purchased" value="true" id="purchased")
+        label(for="purchased") Yes
+        input(type="radio", name="purchased" value="false" id="notPurchased" checked)
+        label(for="notPurchased") No
+    button(type="submit") Save changes
+  div(class="back-to-main")
+    //- a(href=`/wishlists/${wishListId}/items/${item.id}` class="cancel") Cancel
+    a(href=`/wishlists/${wishListId}` class='back-to-wishlist') Back to Wishlist
+  if errors
+    ul(class='error-list')
+      each error in errors
+        li= error

@@ -50,7 +50,17 @@ const commentValidators = [
 
 /* Create a POST /comments/new Route */
 router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidators, asyncHandler(async(req, res) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
+    const wishlist = await db.Wishlist.findByPk(req.params.id, {
+        include: {
+          all: true
+        }
+      });
+    const comments = await db.Comment.findAll({
+        where: {
+            wishListId: wishlist.id
+        },
+        include: { model: db.User }
+    })
     const userId = req.session.auth.userId
     const { content, createdAt } = req.body;
 
@@ -61,19 +71,30 @@ router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidato
         createdAt
     });
 
+    const wishlistsByUser = await db.Wishlist.findAll({
+        where: {
+          userId: req.session.auth.userId,
+        },
+    });
+
     const validatorErrors = validationResult(req);
+    const authorized = isAuthorized(req.session.auth.userId, wishlist.userId);
 
     if(validatorErrors.isEmpty()) {
         await comment.save();
         res.redirect(`/wishlists/${wishlist.id}`);
     } else {
         const errors = validatorErrors.array().map((error) => error.msg);
-        res.render('new-comment', {
-            title: 'Create Comment',
+        res.render('wishlist', {
+            title: wishlist.name,
+            wishlistsByUser,
             wishlist,
-            comment,
+            items: wishlist.Items,
+            comments,
+            authorized,
             errors,
-            csrfToken: req.csrfToken()
+            content,
+            csrfToken: req.csrfToken(),
         });
     };
 }));
@@ -82,23 +103,52 @@ router.post('/wishlists/:id(\\d+)/comments/new', csrfProtection, commentValidato
 
 /* Create a PUT /comments/:id Route */
 
-router.get('/comments/edit/:id(\\d+)', csrfProtection, asyncHandler(async(req, res) => {
-    const comments = await db.Comment.findByPk(req.params.id);
-
-    // const authorized = isAuthorized(req.session.auth.userId, comment.id);
-
-    res.render('edit-comment', {
-        title: 'Edit Comment',
-        comments,
-        csrfToken: req.csrfToken(),
+router.get('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res, next) => {
+    const comment = await db.Comment.findByPk(req.params.id);
+    const wishlist = await db.Wishlist.findByPk(comment.wishListId, {
+        include: {
+            all: true,
+        },
+    });
+    const comments = await db.Comment.findAll({
+        where: {
+            wishListId: wishlist.id
+        },
+        include: {
+            all: true
+        },
     })
+    const wishlistsByUser = await db.Wishlist.findAll({
+        where: {
+          userId: req.session.auth.userId,
+        },
+    });
+    const authorized = isAuthorized(req.session.auth.userId, comment.userId);
+
+    if(authorized) {
+        res.render('edit-comment', {
+            title: 'Edit Comment',
+            comment,
+            comments,
+            editId: comment.id,
+            wishlistsByUser,
+            wishlist,
+            items: wishlist.Items,
+            authorized,
+            csrfToken: req.csrfToken(),
+        })
+    } else {
+        const error = new Error()
+        error.status = 404
+        next(error)
+    }
 
 }));
 
-router.post('/comments/edit/:id(\\d+)', csrfProtection, asyncHandler(async(req, res) => {
-    // const wishlist = await db.Wishlist.findByPk(req.params.id);
+router.post('/comments/:id(\\d+)/edit', csrfProtection, asyncHandler(async(req, res) => {
     const commentId = parseInt(req.params.id, 10);
     const commentToUpdate = await db.Comment.findByPk(commentId);
+    const wishlist = await db.Wishlist.findByPk(commentToUpdate.wishListId);
 
     // const authorized = isAuthorized(req.session.auth.userId, comment.id);
 
@@ -126,29 +176,23 @@ router.post('/comments/edit/:id(\\d+)', csrfProtection, asyncHandler(async(req, 
 }));
 
 
+router.get('/comments/:id(\\d+)/delete', csrfProtection,
+asyncHandler(async (req, res, next) => {
+    const commentId = parseInt(req.params.id, 10);
+    const commentToDelete = await db.Comment.findByPk(commentId);
+    const wishlist = await db.Wishlist.findByPk(commentToDelete.wishListId);
 
-/* Create a DELETE /comments/:id Route */
-router.get('/comments/delete/:id(\\d+)', csrfProtection,
-asyncHandler(async (req, res) => {
-    const comment = await db.Comment.findByPk(req.params.id);
+    const authorized = isAuthorized(req.session.auth.userId, commentToDelete.userId);
 
-    res.render('delete-comment', {
-        title: 'Delete Comment',
-        comment,
-        csrfToken: req.csrfToken(),
-    })
+    if(authorized) {
+        await commentToDelete.destroy();
+        res.redirect(`/wishlists/${wishlist.id}`)
+    } else {
+        const error = new Error()
+        error.status = 404
+        next(error)
+    }
 }))
-
-
-router.post('/comments/delete/:id(\\d+)', csrfProtection,
-asyncHandler(async (req, res) => {
-    const wishlist = await db.Wishlist.findByPk(req.params.id);
-    const comment = await db.Comment.findByPk(req.params.id);
-    await comment.destroy()
-    res.redirect(`/wishlists/${wishlist.id}`)
-}))
-
-
 
 
 module.exports = router;

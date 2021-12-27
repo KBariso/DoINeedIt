@@ -1,37 +1,60 @@
 extends layout.pug
 
 block content
+  //- script(src="../public/javascripts/index.js")
   link(rel="stylesheet", href='/stylesheets/wishlist.css')
   div.content-container
     div.left-nav-bar
+      span My Wishlists
+      span
+        a(href="/wishlists/new")
+          i(class="far fa-plus-square")
       ul
         each wishlist in wishlistsByUser
-          li= wishlist.name
+          li.user-wishlists
+            a(href=`/wishlists/${wishlist.id}` class="anchor") #{wishlist.name}
     div.middle-section
-      form(method="post" action=`/wishlists/${wishlist.id}/edit`)
+      h1(class="update-title") Edit Wishlist
+      form(method="post" action=`/wishlists/${wishlist.id}/edit` class="update-form")
         input(type="hidden" name="_csrf" value=csrfToken)
+        label(for="name") Name
         input(type='text' name='name' value=wishlist.name)
         h3 By #{wishlist.User.username}
+        label(for="description") Description
         textarea(name='description') #{wishlist.description}
         label(for='isPublic') Privacy Settings
         if wishlist.isPublic
+          span.public
             input(type="radio", name="isPublic" value="true" id="true" checked)
             label(for="true") Public
             input(type="radio", name="isPublic" value="false" id="false")
             label(for="false") Private
         else
+          span.public
             input(type="radio", name="isPublic" value="true" id="true")
             label(for="true") Public
             input(type="radio", name="isPublic" value="false" id="false" checked)
             label(for="false") Private
         button(type="submit") Save Changes
-        a(href=`/wishlists/${wishlist.id}/delete`) Delete Wishlist
+        a(href=`/wishlists/${wishlist.id}/delete` class="delete-wishlist") Delete Wishlist
         div
           if (items)
             each item in items
-              div
-                if (authorized)
-                  input(type="checkbox", name="purchased" value="purchased")
-                span
-                  a(href=`/items/${item.id}`) #{item.name}
-                span #{item.price}
+              div.item-name
+                div
+                  //- if (authorized)
+                  //-   input(type="checkbox", name="purchased" value="true")
+                  span.purchase-icons
+                    if (item.purchased)
+                      i(class="fas fa-check-square")
+                    else
+                      i(class="far fa-square")
+                  span
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}` class="anchor") #{item.name}
+                div.item-button
+                  span $#{item.price}
+                  if (authorized)
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/edit`)
+                      i(class="far fa-edit")
+                    a(href=`/wishlists/${wishlist.id}/items/${item.id}/delete`)
+                      i(class="far fa-trash-alt")
