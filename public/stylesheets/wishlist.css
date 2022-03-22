@@ -26,7 +26,7 @@ body {
     padding: 10px;
     min-width: 600px;
     width: 50%;
-    overflow: hidden;
+    height: 87vh;
 }
 
 .user-wishlists {
@@ -64,7 +64,8 @@ body {
 }
 
 .comments-container {
-    height: 115%;
+    overflow-y: auto;
+    height: 40vh;
     /* border: 2px solid black; */
 }
 
@@ -100,7 +101,7 @@ body {
 
 .post-comment {
     display: flex;
-    margin-top: 5px;
+    margin-top: 75px;
     /* justify-content: space-between; */
 
 }
