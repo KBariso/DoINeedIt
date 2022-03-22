@@ -15,15 +15,25 @@ h1, h2 {
 
 .heading {
     margin: 10px;
+    font-family: 'Lilita One', cursive;
+    /* font-weight: bolder; */
 }
+
 
 .sub-heading {
     padding: 10px;
+    font-family: 'Lilita One', cursive;
+    font-size: 44px;
+    /* font-weight: 700; */
+    /* font-size: larger; */
 }
 
 .sign-up > a {
     text-decoration: none;
     background-color: #d24b03;
+    font-family: 'Lilita One', cursive;
+    font-size: large;
+    /* font-weight: bolder; */
     padding: 10px 20px;
     border-radius: 5px;
     color: white;
@@ -40,5 +50,8 @@ h1, h2 {
 .main-picture {
     display: flex;
     justify-content: center;
+    /* width: 20%; */
+    /* height: 50%; */
+    height: 600px;
 
 }

@@ -13,6 +13,9 @@ block content
   div.user-question
     p Don't have an account?
       a(href='/users/signup') Sign up
+    form(method='post' action='/users/demo-login')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      input(type='submit' value='Demo User')
   if errors
     ul(class='error-list')
       each error in errors
