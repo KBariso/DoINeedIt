@@ -27,6 +27,7 @@ body {
     min-width: 600px;
     width: 50%;
     height: 87vh;
+    overflow: auto;
 }
 
 .user-wishlists {
@@ -239,4 +240,8 @@ body {
     width: fit-content;
     padding: 5px 10px;
     text-decoration: none;
+}
+
+.nav-button.browse {
+    border: 1px solid white;
 }
