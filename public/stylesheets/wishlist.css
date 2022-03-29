@@ -223,3 +223,20 @@ body {
     font-size: .8rem;
     color: rgb(87, 86, 86);
 }
+
+.no-wishlist {
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+.new {
+    color: white;
+    margin: 20px;
+    padding: 5px 0;
+    border-radius: 3px;
+    border: 1px solid #0077B8;
+    background-color: #0077B8;
+    width: fit-content;
+    padding: 5px 10px;
+    text-decoration: none;
+}
