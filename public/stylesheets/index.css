@@ -1,6 +1,20 @@
 html {
-    background-color: #0077B8;
-}
+    background: linear-gradient(100deg,#200c32,#e74d89,#febaa6);
+    background-size: 180% 180%;
+    animation: gradient-animation 9s ease infinite;
+  }
+
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
 h1, h2 {
     text-align: center;

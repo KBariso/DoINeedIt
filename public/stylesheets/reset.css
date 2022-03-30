@@ -32,13 +32,18 @@ h1 {
 }
 
 .nav-bar {
-  background-color: #0077B8;
+  background-color: #00AB90;
   color: rgb(241, 241, 241);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 15px 10px;
+  padding-top: 15px;
 }
+
+
+
+
+
 
 .nav-right {
   display: flex;
