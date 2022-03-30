@@ -248,4 +248,35 @@ router.get('/search', asyncHandler(async(req, res) => {
   })
 }))
 
+/* GET - All Public Wishlists */
+router.get('/public', asyncHandler(async(req, res) => {
+
+  const userId = req.session.auth.userId
+
+  const publicWishlists = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      isPublic: true,
+    },
+  });
+
+  const wishlistsByUser = await db.Wishlist.findAll({
+    include: {
+      all: true,
+    },
+    where: {
+      userId: req.session.auth.userId,
+    },
+  });
+
+  res.render("public-wishlists", {
+    title: `Public Wishlists`,
+    publicWishlists,
+    wishlistsByUser,
+    userId
+  })
+}))
+
 module.exports = router;

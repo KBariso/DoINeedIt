@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           name: "Gotta Look Good",
-          isPublic: false,
+          isPublic: true,
           userId: 3,
           description: "Just a couple of things I want before my bffs big day",
           createdAt: new Date(),
@@ -15,7 +15,7 @@ module.exports = {
         },
         {
           name: "Christmas Wishlist",
-          isPublic: false,
+          isPublic: true,
           userId: 7,
           description: "I hope Santa sees this wishlist!",
           createdAt: new Date(),
@@ -31,7 +31,7 @@ module.exports = {
         },
         {
           name: "Collecting Pokemon Movies",
-          isPublic: false,
+          isPublic: true,
           userId: 5,
           description: "Gotta buy them all!",
           createdAt: new Date(),
@@ -39,7 +39,7 @@ module.exports = {
         },
         {
           name: "Gaming Wishlist",
-          isPublic: false,
+          isPublic: true,
           userId: 15,
           description: "I want some new games in my life",
           createdAt: new Date(),
@@ -47,7 +47,7 @@ module.exports = {
         },
         {
           name: "Entertainment Center",
-          isPublic: false,
+          isPublic: true,
           userId: 9,
           description: "I want to add some cool things to my new home theater",
           createdAt: new Date(),
@@ -63,7 +63,7 @@ module.exports = {
         },
         {
           name: "Christmas Shopping",
-          isPublic: false,
+          isPublic: true,
           userId: 5,
           description: "Some parts I want for my PC upgrade",
           createdAt: new Date(),
@@ -95,7 +95,7 @@ module.exports = {
         },
         {
           name: "Just Car Tings",
-          isPublic: false,
+          isPublic: true,
           userId: 8,
           description: "Tryna spruce up the whip",
           createdAt: new Date(),
@@ -103,7 +103,7 @@ module.exports = {
         },
         {
           name: "Hot Fashion",
-          isPublic: false,
+          isPublic: true,
           userId: 2,
           description: "These are definitely a must",
           createdAt: new Date(),
@@ -127,7 +127,7 @@ module.exports = {
         },
         {
           name: "Fluffy Needs New Toys",
-          isPublic: false,
+          isPublic: true,
           userId: 6,
           description: "Fluffy is my dog",
           createdAt: new Date(),
@@ -143,7 +143,7 @@ module.exports = {
         },
         {
           name: "Lost My Airpods... Again",
-          isPublic: false,
+          isPublic: true,
           userId: 2,
           description: "Title says it all...",
           createdAt: new Date(),
@@ -151,7 +151,7 @@ module.exports = {
         },
         {
           name: "Jewelery Please",
-          isPublic: false,
+          isPublic: true,
           userId: 10,
           description: "I need some bling for the New Year's party",
           createdAt: new Date(),
@@ -159,7 +159,7 @@ module.exports = {
         },
         {
           name: "Perfumes",
-          isPublic: false,
+          isPublic: true,
           userId: 5,
           description: "I only wear the best of the best",
           createdAt: new Date(),

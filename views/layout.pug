@@ -18,6 +18,7 @@ html
               i(class="fas fa-search")
               input(type="search", name="term" placeholder="Search for Wishlist")
               button(type="submit" class="search-button") Search
+          a(href='/wishlists/public' class='nav-button browse') Browse
       div(class='nav-right')
         if authenticated
           p(class='welcome') Welcome, #{user.fullName}!
