@@ -1,6 +1,20 @@
 html {
-    background-color: #0077B8;
-}
+    background: linear-gradient(100deg,#200c32,#e74d89,#febaa6);
+    background-size: 180% 180%;
+    animation: gradient-animation 9s ease infinite;
+  }
+
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
 h1, h2 {
     text-align: center;
@@ -15,15 +29,25 @@ h1, h2 {
 
 .heading {
     margin: 10px;
+    font-family: 'Lilita One', cursive;
+    /* font-weight: bolder; */
 }
+
 
 .sub-heading {
     padding: 10px;
+    font-family: 'Lilita One', cursive;
+    font-size: 44px;
+    /* font-weight: 700; */
+    /* font-size: larger; */
 }
 
 .sign-up > a {
     text-decoration: none;
     background-color: #d24b03;
+    font-family: 'Lilita One', cursive;
+    font-size: large;
+    /* font-weight: bolder; */
     padding: 10px 20px;
     border-radius: 5px;
     color: white;
@@ -40,5 +64,8 @@ h1, h2 {
 .main-picture {
     display: flex;
     justify-content: center;
+    /* width: 20%; */
+    /* height: 50%; */
+    height: 600px;
 
 }

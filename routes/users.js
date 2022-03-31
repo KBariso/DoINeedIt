@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('../utils');
-const { login, logout, restoreUser } = require('../auth')
+const { login, logout, restoreUser, demoLogin } = require('../auth')
 
 const router = express.Router();
 /* GET users listing. */
@@ -160,6 +160,18 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
     errors
    })
 }))
+
+router.post('/demo-login', csrfProtection, asyncHandler(async (req, res, next) => {
+
+
+      demoLogin(req, res);
+      return res.redirect('/');
+
+
+  // res.redirect('/');
+}));
+
+
 
 router.post('/logout', (req, res) => {
   logout(req, res);

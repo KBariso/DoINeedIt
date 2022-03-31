@@ -7,6 +7,13 @@ const login = (req, res, user) => {
   }
 }
 
+const demoLogin = (req, res) => {
+  req.session.auth = {
+    userId: 1
+  }
+}
+
+
 const logout = (req, res) => {
   delete req.session.auth;
 }
@@ -53,5 +60,6 @@ module.exports = {
   logout,
   requireAuth,
   restoreUser,
-  isAuthorized
+  isAuthorized,
+  demoLogin
 };
