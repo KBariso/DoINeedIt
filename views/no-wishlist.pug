@@ -1,0 +1,9 @@
+extends layout.pug
+
+block content
+    link(rel="stylesheet", href='/stylesheets/wishlist.css')
+    div.content-container
+        div.left-nav-bar
+        div.middle-section
+            h1(class="no-wishlist") You have no wishlists. 
+            a(href="/wishlists/new" class="new") Create Wishlist

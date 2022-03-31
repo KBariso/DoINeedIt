@@ -26,7 +26,8 @@ body {
     padding: 10px;
     min-width: 600px;
     width: 50%;
-    overflow: hidden;
+    height: 87vh;
+    overflow: auto;
 }
 
 .user-wishlists {
@@ -64,7 +65,8 @@ body {
 }
 
 .comments-container {
-    height: 115%;
+    overflow-y: auto;
+    height: 40vh;
     /* border: 2px solid black; */
 }
 
@@ -100,7 +102,7 @@ body {
 
 .post-comment {
     display: flex;
-    margin-top: 5px;
+    margin-top: 75px;
     /* justify-content: space-between; */
 
 }
@@ -221,4 +223,25 @@ body {
 .user-name {
     font-size: .8rem;
     color: rgb(87, 86, 86);
+}
+
+.no-wishlist {
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+.new {
+    color: white;
+    margin: 20px;
+    padding: 5px 0;
+    border-radius: 3px;
+    border: 1px solid #0077B8;
+    background-color: #0077B8;
+    width: fit-content;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.nav-button.browse {
+    border: 1px solid white;
 }
