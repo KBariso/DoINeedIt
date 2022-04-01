@@ -9,7 +9,7 @@ const login = (req, res, user) => {
 
 const demoLogin = (req, res) => {
   req.session.auth = {
-    userId: 1
+    userId: 9
   }
 }
 

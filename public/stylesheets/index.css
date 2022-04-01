@@ -66,6 +66,10 @@ h1, h2 {
     justify-content: center;
     /* width: 20%; */
     /* height: 50%; */
-    height: 600px;
+    height: 45vh;
 
+}
+
+.fa-github:hover, .fa-linkedin-in:hover {
+  color: #00AB90;
 }

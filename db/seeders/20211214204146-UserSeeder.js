@@ -70,9 +70,9 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          fullName: "Vasanti Sadaf",
-          email: "vasanti@email.com",
-          username: "vasantis",
+          fullName: "Demo",
+          email: "demo@email.com",
+          username: "demo",
           hashedPassword: "$2a$10$6kqgmEMdKJ6VkDYZlsruDOv.g.fbQoQZb2SGSwzNlWXVq/X.C0nhG",
           createdAt: new Date(),
           updatedAt: new Date(),

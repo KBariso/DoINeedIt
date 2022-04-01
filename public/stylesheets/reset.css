@@ -1,6 +1,6 @@
 html {
   position: relative;
-  background-color: #e4eef8;
+  background-color: #e8faf7;
 }
 
 body {
@@ -9,7 +9,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00AB90;
 }
 
 * {
@@ -38,12 +38,7 @@ h1 {
   justify-content: space-evenly;
   align-items: center;
   padding-top: 15px;
-
-
-
-
-
-
+}
 
 .nav-right {
   display: flex;
@@ -92,7 +87,8 @@ h1 {
 }
 
 .nav-button:hover {
-  background-color: #006094;
+  background-color: #02695a;
+  cursor: pointer;
 }
 
 .nav-button:active {
@@ -110,11 +106,11 @@ h1 {
 }
 
 .bottom-bar {
-  position: relative;
+  position: fixed;
   bottom: 0px;
   display: flex;
   width: 100%;
-  padding: 40px 15px;
+  padding: 10px;
   justify-content: space-evenly;
   background-color: white;
   color: black;
@@ -219,13 +215,14 @@ h1 {
   border: 1px solid white;
   background-color: rgba(255, 255, 255, 0.925);
   margin-left: 5px;
-  color: #006094;
+  color: #02695a;
   font-weight: bold;
 }
 
 .search-button:hover {
-  color: #013450;
+  color: #00AB90;
   box-shadow: 1.5px 1.5px 1.5px rgba(255,255,255,0.4);
+  cursor: pointer;
 }
 
 .user-question {
@@ -234,9 +231,10 @@ h1 {
 
 .user-question a {
   margin-left: 5px;
-  color: #0095f6;
+  color: #00AB90;
+  font-weight: 600;
 }
 
 .user-question a:hover {
-   font-weight: 600;
+   color:#02695a
 }
