@@ -1,5 +1,5 @@
 .form-title {
-  margin: 10px auto;
+  margin: 30px auto 15px auto;
   width: 50%;
   padding-left: 10px;
   color: rgba(0, 0, 0, 0.5);
@@ -11,9 +11,9 @@
   padding: 10px;
   width: 50%;
   font-size: 15px;
-  border: 1px solid gray;;
+  border: 1px solid #e74d89;
   border-radius: 6px;
-  background-color: rgb(235, 232, 232);
+  background: white;
 }
 
 .auth-form > label {
@@ -22,26 +22,23 @@
 }
 
 .auth-form > input {
-  font-size: 14px;
+  font-size: 16px;
   padding: 3px;
   border-radius: 3px;
-  border: 1px solid gray;
-}
-
-.auth-form > input[type=text]:focus {
-  background-color: #e4eef8;
+  border: 1px solid #e74d89;
 }
 
 .auth-form > button {
   margin-top: 10px;
   padding: 5px 0;
   border-radius: 3px;
-  border: 1px solid gray;
-  background-color: lightgray;
+  border: 1px solid #e74d89;
+  color: white;
+  background: linear-gradient(100deg,#e74d89,#febaa6);
 }
 
 .auth-form > button:hover {
-  background-color: rgb(189, 189, 189);
+  background: linear-gradient(100deg, #febaa6,#e74d89);
   cursor: pointer;
 }
 
@@ -142,7 +139,8 @@
   width: fit-content;
 }
 
-.back-to-wishlist:hover {
+.back-to-wishlist:hover, .demo:hover {
+  cursor: pointer;
   background-color: #c04808;
 }
 
@@ -186,4 +184,16 @@
 
 .delete-wishlist:hover {
   background-color: rgb(160, 20, 20);
+}
+
+.demo {
+  color: white;
+  margin: 5px;
+  padding: 5px 0;
+  border-radius: 3px;
+  background-color: #d24b03;
+  border: 1px solid #d24b03;
+  width: fit-content;
+  padding: 5px 10px;
+  text-decoration: none;
 }

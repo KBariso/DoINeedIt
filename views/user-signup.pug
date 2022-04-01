@@ -24,7 +24,7 @@ block content
             a(href='/users/login') Log In
         form(method='post' action='/users/demo-login')
             input(type='hidden' name='_csrf' value=csrfToken)
-            input(type='submit' value='Demo User')
+            input(type='submit' value='Demo User' class="demo")
     if errors
         ul(class='error-list')
             each error in errors
