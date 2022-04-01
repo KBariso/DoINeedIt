@@ -69,3 +69,7 @@ h1, h2 {
     height: 45vh;
 
 }
+
+.fa-github:hover, .fa-linkedin-in:hover {
+  color: #00AB90;
+}

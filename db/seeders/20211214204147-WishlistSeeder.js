@@ -87,7 +87,7 @@ module.exports = {
         },
         {
           name: "Grocery List",
-          isPublic: true,
+          isPublic: false,
           userId: 10,
           description: "Some groceries I need for Christmas dinner",
           createdAt: new Date(),
@@ -183,7 +183,7 @@ module.exports = {
         },
         {
           name: "Backyard Fun",
-          isPublic: true,
+          isPublic: false,
           userId: 9,
           description: "I'm going to have the coolest backyard ever",
           createdAt: new Date(),
