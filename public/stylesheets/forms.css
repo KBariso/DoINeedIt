@@ -139,7 +139,7 @@
   width: fit-content;
 }
 
-.back-to-wishlist:hover, .demo:hover {
+.back-to-wishlist:hover {
   cursor: pointer;
   background-color: #c04808;
 }
@@ -191,9 +191,16 @@
   margin: 5px;
   padding: 5px 0;
   border-radius: 3px;
-  background-color: #d24b03;
-  border: 1px solid #d24b03;
+  background-color: #e66194;
+  border: 1px solid #e66194;
   width: fit-content;
   padding: 5px 10px;
   text-decoration: none;
+}
+
+.demo:hover {
+  cursor: pointer;
+  background-color: #e74d89;
+  border: 1px solid #e74d89;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
