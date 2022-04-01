@@ -26,8 +26,12 @@ body {
     padding: 10px;
     min-width: 600px;
     width: 50%;
-    height: 87vh;
-    overflow: auto;
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.middle-section::-webkit-scrollbar {
+    display: none;
 }
 
 .user-wishlists {
@@ -66,7 +70,7 @@ body {
 
 .comments-container {
     overflow-y: auto;
-    height: 40vh;
+    height: 35vh;
     /* border: 2px solid black; */
 }
 
@@ -235,8 +239,8 @@ body {
     margin: 20px;
     padding: 5px 0;
     border-radius: 3px;
-    border: 1px solid #0077B8;
-    background-color: #0077B8;
+    border: 1px solid #00AB90;;
+    background-color: #00AB90;;
     width: fit-content;
     padding: 5px 10px;
     text-decoration: none;
