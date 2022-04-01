@@ -49,7 +49,7 @@ body {
 }
 
 .far:hover {
-    background-color: #0077B8;
+    background-color: #00AB90;
     color:white;
 }
 
@@ -193,7 +193,7 @@ body {
     font-size: 19px;
     font-weight: 550;
     padding: 10px;
-    color: #0077B8;
+    color: #00AB90;
 }
 
 .item-details > ul {

@@ -109,15 +109,15 @@
   margin-top: 10px;
   padding: 5px 0;
   border-radius: 3px;
-  border: 1px solid #0077B8;
-  background-color: #0077B8;
+  border: 1px solid #00AB90;
+  background-color: #00AB90;
   width: fit-content;
   padding: 5px 10px;
 }
 
 .update-form > button:hover {
-  background-color: #006094;
-  border: 1px solid #006094;
+  background-color: #02695a;
+  border: 1px solid #02695a;
   cursor: pointer;
 }
 
